@@ -11,6 +11,8 @@ import {
     NavigationMenuTrigger,
     NavigationMenuContent,
 } from "@/components/ui/navigation-menu";
+// import { redirect } from "next/navigation";
+import { SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
     const [open, setOpen] = useState(false);
@@ -64,21 +66,37 @@ export default function Navbar() {
                             <a href="#pricing" className="text-xl font-medium text-gray-700 hover:text-black transition-colors">
                                 Precios
                             </a>
+                            <Link href="/events" className="text-xl font-medium text-gray-700 hover:text-black transition-colors mx-2 ">
+                                EVENTOS(prueba)
+                            </Link>
                         </NavigationMenuItem>
 
                         <NavigationMenuItem>
                             <Button
+                                asChild
                                 variant="outline"
                                 className="ml-4 border-blue-600 text-blue-600 hover:bg-blue-50 text-xl"
+                            // onClick={() => redirect("/login")}
                             >
-                                Ingresar a mi cuenta
+                                <SignInButton />
                             </Button>
+                            <Button
+                                asChild
+                                variant="outline"
+                                className="ml-4 border-blue-600 text-blue-600 hover:bg-blue-50 text-xl"
+                            // onClick={() => redirect("/login")}
+                            >
+                                <SignUpButton />
+                            </Button>
+
+
                         </NavigationMenuItem>
-                        <NavigationMenuItem>
+                            <UserButton />
+                        {/* <NavigationMenuItem>
                             <Button className="ml-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-medium hover:from-blue-600 hover:to-blue-800 text-xl">
                                 Prueba gratis
                             </Button>
-                        </NavigationMenuItem>
+                        </NavigationMenuItem> */}
                     </NavigationMenuList>
                 </NavigationMenu>
 

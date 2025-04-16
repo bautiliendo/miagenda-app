@@ -2,12 +2,13 @@
 
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
-import { cn } from "@/lib/utils"; // Asegurate de tener esta utilidad, o reemplazalo con un simple `clsx` o concatenación
+import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 const plans = [
   {
     name: "Básico",
-    price: "$7.800",
+    monthlyPrice: 9990,
     description: "Ideal para quienes están empezando a organizar su negocio.",
     features: [
       "Agenda online de citas ilimitadas",
@@ -21,21 +22,21 @@ const plans = [
   },
   {
     name: "Profesional",
-    price: "$13.800",
+    monthlyPrice: 18990,
     description: "Perfecto para quienes quieren dar un paso más.",
     features: [
       "Todo lo del plan básico, más:",
       "Hasta 4 profesionales",
       "Estadísticas de crecimiento",
       "Recordatorios y confirmación por WhatsApp",
-      "Multilpes sucursales",
+      "Multilples sucursales",
       "Encuestas de satisfacción",
     ],
     popular: true,
   },
   {
     name: "Avanzado",
-    price: "$18.900",
+    monthlyPrice: 27990,
     description: "Para quienes buscan tener un control completo.",
     features: [
       "Todo lo del plan profesional, más",
@@ -48,6 +49,16 @@ const plans = [
 ];
 
 export default function Pricing() {
+  const [anual, setAnual] = useState<boolean>(false);
+
+  const formatPrice = (price: number) => {
+    return price.toLocaleString("es-AR", {
+      style: "currency",
+      currency: "ARS",
+      minimumFractionDigits: 0,
+    });
+  };
+
   return (
     <section className="py-20 px-4 max-w-6xl mx-auto">
       <motion.h2
@@ -58,9 +69,28 @@ export default function Pricing() {
       >
         Planes accesibles, sin comprometer calidad
       </motion.h2>
-      <p className="text-gray-600 mb-12 text-center max-w-xl mx-auto">
+      <p className="text-gray-600 mb-8 text-center max-w-xl mx-auto">
         Creamos esta herramienta pensando en profesionales que buscan organizarse mejor y brindar una experiencia moderna a sus clientes.
       </p>
+
+      {/* SWITCH */}
+      <div className="flex items-center justify-center gap-3 mb-12">
+        <span className="text-gray-700 font-medium">Mensual</span>
+        <button
+          onClick={() => setAnual(!anual)}
+          className={cn(
+            "relative w-14 h-7 flex items-center rounded-full p-1 cursor-pointer transition",
+            anual ? "bg-blue-600" : "bg-gray-300"
+          )}
+        >
+          <motion.div
+            className="bg-white w-6 h-6 rounded-full shadow-md"
+            animate={{ x: anual ? 28 : 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          />
+        </button>
+        <span className="text-gray-700 font-medium">Anual (2 meses gratis)</span>
+      </div>
 
       <div className="grid md:grid-cols-3 gap-8">
         {plans.map((plan, index) => (
@@ -84,16 +114,23 @@ export default function Pricing() {
               <h3 className="text-2xl font-semibold text-gray-900 mb-2">
                 {plan.name}
               </h3>
-              <p className="text-3xl font-bold text-blue-600 mb-1">{plan.price}</p>
+              <p className="text-3xl font-bold text-blue-600 mb-1">
+                {anual
+                  ? formatPrice(plan.monthlyPrice * 10)
+                  : formatPrice(plan.monthlyPrice)}
+              </p>
               <p className="text-gray-600">{plan.description}</p>
             </div>
 
             <ul className="space-y-2 mb-6 flex-1">
               {plan.features.map((feature, i) => (
                 <li key={i} className="flex items-start text-gray-700 gap-2">
-                <Check size={18} className="text-green-500 mt-1 flex-shrink-0" />
-                <div>{feature}</div>
-              </li>
+                  <Check
+                    size={18}
+                    className="text-green-500 mt-1 flex-shrink-0"
+                  />
+                  <div>{feature}</div>
+                </li>
               ))}
             </ul>
 

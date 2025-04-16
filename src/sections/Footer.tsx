@@ -31,7 +31,7 @@ export default function Footer() {
         <div className="md:w-1/4">
           <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-700 mb-3">Contacto</h3>
           <ul className="space-y-2 text-sm">
-            <li>Email: <a href="mailto:juanbautistaliendo1@gmail.com" className="hover:text-blue-600">juanbautistaliendo1@gmail.com</a></li>
+            <li>Email: <a href="mailto:juanbautistaliendo1@gmail.com" className="hover:text-blue-600">juanbautista.................</a></li>
             <li>Tel: <a href="tel:+549.........." className="hover:text-blue-600">+54 9 ... ... ....</a></li>
           </ul>
         </div>

@@ -6,6 +6,7 @@ import Footer from "@/sections/Footer";
 import FAQ from "@/sections/Faq";
 
 export default function Home() {
+
   return (
     <>
       <Navbar />
@@ -13,7 +14,7 @@ export default function Home() {
         <Hero />
         <Features />
         <FAQ />
-        <Pricing/>
+        <Pricing />
         <Footer />
       </main>
     </>
