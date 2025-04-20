@@ -15,6 +15,7 @@ import {
 import { SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
+
     const [open, setOpen] = useState(false);
     const [openSoluciones, setOpenSoluciones] = useState(false);
     const [openFaq, setOpenFaq] = useState(false);
@@ -91,7 +92,7 @@ export default function Navbar() {
 
 
                         </NavigationMenuItem>
-                            <UserButton />
+                        <UserButton />
                         {/* <NavigationMenuItem>
                             <Button className="ml-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-medium hover:from-blue-600 hover:to-blue-800 text-xl">
                                 Prueba gratis
@@ -149,6 +150,13 @@ export default function Navbar() {
                         <a href="#pricing" className="font-medium" onClick={() => setOpen(false)}>
                             Precios
                         </a>
+                        <a href="/events" className="font-medium" onClick={() => setOpen(false)}>
+                            Eventos (prueba)
+                        </a>
+
+                            <UserButton />
+
+
                     </div>
 
                     {/* Botones fijos abajo */}
@@ -156,11 +164,23 @@ export default function Navbar() {
                         <Button className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-medium hover:from-blue-600 hover:to-blue-800 text-xl w-full">
                             Prueba gratis
                         </Button>
+
+
                         <Button
+                            asChild
                             variant="outline"
-                            className="border-blue-600 text-blue-600 hover:bg-blue-50 text-xl w-full"
+                            className="ml-4 border-blue-600 text-blue-600 hover:bg-blue-50 text-xl"
+                        // onClick={() => redirect("/login")}
                         >
-                            Ingresar a mi cuenta
+                            <SignInButton />
+                        </Button>
+                        <Button
+                            asChild
+                            variant="outline"
+                            className="ml-4 border-blue-600 text-blue-600 hover:bg-blue-50 text-xl"
+                        // onClick={() => redirect("/login")}
+                        >
+                            <SignUpButton />
                         </Button>
 
                         {/* Info de contacto */}

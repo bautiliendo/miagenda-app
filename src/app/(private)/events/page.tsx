@@ -14,7 +14,7 @@ import { CalendarPlus, CalendarRange } from "lucide-react";
 import { formatEventDescription } from "@/lib/formatters";
 import Link from "next/link";
 import { CopyEventButton } from "@/components/CopyEventButton";
-// import { revalidate } from '../../(public)/book/[clerkUserId]/[eventId]/page';
+
 
 export const revalidate = 0
 
