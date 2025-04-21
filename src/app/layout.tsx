@@ -12,7 +12,7 @@ import {
 const outfit = Outfit({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
 export const metadata = {
-  title: "MiAgenda",
+  title: "Turnero App",
   description: "Sistema de agenda de turnos",
 };
 

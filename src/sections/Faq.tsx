@@ -54,7 +54,7 @@ export default function FAQ() {
 const faqItems = [
   {
     id: 1,
-    question: "¿Cuánto cuesta usar MiAgenda?",
+    question: "¿Cuánto cuesta usar Turnero App?",
     answer:
       "Contamos con diferentes planes según tus necesidades. Podés empezar con una prueba gratis y luego elegir el que mejor se adapte a vos.",
   },

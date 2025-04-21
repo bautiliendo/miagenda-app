@@ -26,7 +26,7 @@ export default function Navbar() {
         <header className="fixed top-0 left-0 w-full bg-white border-b z-50 py-2">
             <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
                 <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-transparent bg-clip-text">
-                    MiAgenda
+                    Turnero app
                 </Link>
 
                 {/* Desktop nav */}
@@ -54,7 +54,7 @@ export default function Navbar() {
                             </NavigationMenuTrigger>
                             <NavigationMenuContent className="bg-white p-4 rounded shadow-md">
                                 <ul className="grid gap-3 p-2 w-64">
-                                    <li><a href="#faq-precio" className="hover:text-blue-600">¿Cuánto cuesta usar MiAgenda?</a></li>
+                                    <li><a href="#faq-precio" className="hover:text-blue-600">¿Cuánto cuesta usar Turnero App?</a></li>
                                     <li><a href="#faq-turnos" className="hover:text-blue-600">¿Cómo gestiono mis turnos?</a></li>
                                     <li><a href="#faq-clientes" className="hover:text-blue-600">¿Pueden mis clientes agendarse solos?</a></li>
                                     <li><a href="#faq-clientes" className="hover:text-blue-600">¿Necesito conocimientos técnicos para usarla?</a></li>
@@ -139,7 +139,7 @@ export default function Navbar() {
                             </button>
                             {openFaq && (
                                 <div className="ml-4 mt-2 flex flex-col gap-1">
-                                    <a href="#faq-precio" onClick={() => setOpen(false)}>¿Cuánto cuesta usar MiAgenda?</a>
+                                    <a href="#faq-precio" onClick={() => setOpen(false)}>¿Cuánto cuesta usar Turnero App?</a>
                                     <a href="#faq-turnos" onClick={() => setOpen(false)}>¿Cómo gestiono mis turnos?</a>
                                     <a href="#faq-clientes" onClick={() => setOpen(false)}>¿Pueden mis clientes agendarse solos?</a>
                                 </div>

@@ -11,7 +11,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
                     <div className="flex items-center gap-2 font-semibold mr-auto">
                         <CalendarRange className="size-6" />
                         <NavLink href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-transparent bg-clip-text">
-                            MiAgenda
+                            Turnero App
                         </NavLink>
                     </div>
                     <NavLink href="/events" className="text-xl font-medium text-gray-700 hover:text-black bg-white">Eventos</NavLink>

@@ -12,10 +12,9 @@ const plans = [
     description: "Ideal para quienes están empezando a organizar su negocio.",
     features: [
       "Agenda online de citas ilimitadas",
-      "Hasta 2 profesionales",
+      "Recordatorios y confirmación por WhatsApp",
       "Gestión de clientes",
       "Recordatorios automáticos",
-      "1 Sucursal",
       "Control de ingresos",
     ],
     popular: false,
@@ -26,9 +25,7 @@ const plans = [
     description: "Perfecto para quienes quieren dar un paso más.",
     features: [
       "Todo lo del plan básico, más:",
-      "Hasta 4 profesionales",
       "Estadísticas de crecimiento",
-      "Recordatorios y confirmación por WhatsApp",
       "Multilples sucursales",
       "Encuestas de satisfacción",
     ],
@@ -40,7 +37,6 @@ const plans = [
     description: "Para quienes buscan tener un control completo.",
     features: [
       "Todo lo del plan profesional, más",
-      "Profesionales ilimitádos",
       "Fichas personalizadas",
       "Soporte prioritario",
     ],
@@ -89,7 +85,7 @@ export default function Pricing() {
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           />
         </button>
-        <span className="text-gray-700 font-medium">Anual (2 meses gratis)</span>
+        <span className="text-gray-700 font-medium">Anual ( %20 descuento )</span>
       </div>
 
       <div className="grid md:grid-cols-3 gap-8">

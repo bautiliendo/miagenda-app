@@ -13,7 +13,7 @@ export default function Hero() {
         {/* Texto a la izquierda */}
         <div className="w-full md:w-1/2 text-center md:text-left">
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
-            Sistema para <span className="bg-gradient-to-r from-blue-500 to-blue-700 text-transparent bg-clip-text">peluquerías, barberías y centros de estética</span>
+            Sistema de <span className="bg-gradient-to-r from-blue-500 to-blue-700 text-transparent bg-clip-text">gestión de turnos para profesionales y negocios</span>
           </h1>
           <p className="mt-6 text-xl text-gray-700">
             Organizá tus turnos, fidelizá clientes y simplificá los cobros. Todo en una sola plataforma, fácil e intuitiva.

@@ -9,7 +9,7 @@ export default function Footer() {
         {/* Columna 1: Logo + Descripción */}
         <div className="md:w-1/4 mx-auto md:mx-0">
           <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-transparent bg-clip-text">
-            MiAgenda
+            Turnero App
           </h2>
           <p className="text-sm text-gray-600 mt-2">
             Herramienta digital para gestionar tus turnos de forma simple y efectiva.
@@ -54,7 +54,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t text-center text-sm text-gray-500 py-6">
-        © {new Date().getFullYear()} MiAgenda. Todos los derechos reservados.
+        © {new Date().getFullYear()} Turnero App. Todos los derechos reservados.
       </div>
     </footer>
   )
