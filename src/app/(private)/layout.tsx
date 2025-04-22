@@ -2,90 +2,174 @@
 
 import { NavLink } from "@/components/NavLink"
 import { UserButton } from "@clerk/nextjs"
-import { ReactNode, useState } from "react"
-import { Menu, X } from "lucide-react";
+import { ReactNode } from "react"
+import { 
+  Menu, 
+  LayoutDashboard, 
+  Calendar,
+  Settings,
+  CreditCard,
+  Users,
+  LucideIcon
+} from "lucide-react"
+import { cn } from "@/lib/utils"
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+
+interface Route {
+    label: string;
+    icon: LucideIcon;
+    href: string;
+    color?: string;
+    variant?: 'default' | 'ghost';
+}
 
 export default function PrivateLayout({ children }: { children: ReactNode }) {
-    const [open, setOpen] = useState(false);
-    const toggleMenu = () => setOpen(!open);
+    const routes: Route[] = [
+        {
+            label: 'Servicios',
+            icon: LayoutDashboard,
+            href: '/events',
+            color: 'text-blue-600',
+            variant: 'default'
+        },
+        {
+            label: 'Cronograma',
+            icon: Calendar,
+            href: '/schedule',
+            color: 'text-violet-600',
+            variant: 'default'
+        },
+        {
+            label: 'Usuarios',
+            icon: Users,
+            href: '/',
+            variant: 'ghost'
+        },
+        {
+            label: 'Configuración',
+            icon: Settings,
+            href: '/',
+            variant: 'ghost'
+        },
+        {
+            label: 'Pagos',
+            icon: CreditCard,
+            href: '/',
+            variant: 'ghost'
+        },
+    ];
 
     return (
-        <>
-            <header className="fixed top-0 left-0 w-full bg-white border-b z-50 py-2">
-                <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-                    <NavLink 
-                        href="/" 
-                        className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-transparent bg-clip-text"
-                    >
-                        Turnero App
-                    </NavLink>
-
-                    {/* Desktop nav */}
-                    <nav className="hidden md:flex font-medium items-center text-sm gap-6">
-                        <NavLink href="/events" className="text-xl font-medium text-gray-700 hover:text-black">
-                            Servicios
-                        </NavLink>
-                        <NavLink href="/schedule" className="text-xl font-medium text-gray-700 hover:text-black">
-                            Cronograma
-                        </NavLink>
-                        <div className="ml-4 size-10">
+        <div className="light">
+            <div className="hidden md:flex h-full w-64 flex-col fixed inset-y-0 z-50">
+                <div className="space-y-4 py-4 flex flex-col h-full bg-white border-r">
+                    <div className="px-3 py-2 flex-1">
+                        <div className="mb-4">
+                            <NavLink href="/" className="flex items-center px-4">
+                                <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 text-transparent bg-clip-text">
+                                    Turnero App
+                                </span>
+                            </NavLink>
+                        </div>
+                        <div className="space-y-1">
+                            {routes.map((route) => (
+                                <NavLink
+                                    key={`${route.href}-${route.label}`}
+                                    href={route.href}
+                                    className={cn(
+                                        "w-full flex items-center gap-x-2 text-gray-600 text-sm font-[500] pl-6 py-4 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all",
+                                        route.color
+                                    )}
+                                >
+                                    <route.icon className="h-5 w-5" />
+                                    {route.label}
+                                </NavLink>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="px-3 py-2">
+                        <div className="px-4 py-2">
                             <UserButton
-                                appearance={{ elements: { userButtonAvatarBox: "size-full" } }}
+                                appearance={{ 
+                                    elements: { 
+                                        userButtonAvatarBox: "size-full"
+                                    } 
+                                }}
                             />
                         </div>
-                    </nav>
-
-                    {/* Mobile hamburger */}
-                    <button className="cursor-pointer md:hidden text-blue-600" onClick={toggleMenu}>
-                        {open ? <X size={30} /> : <Menu size={30} />}
-                    </button>
+                    </div>
                 </div>
-
-                {/* Mobile menu */}
-                {open && (
-                    <nav className="md:hidden bg-white border-t px-4 py-2 flex flex-col h-[calc(100vh-64px)]">
-                        {/* Menú principal */}
-                        <div className="flex-grow flex flex-col gap-2 text-gray-700 text-xl">
-                            <NavLink 
-                                href="/events" 
-                                className="font-medium" 
-                                onClick={() => setOpen(false)}
-                            >
-                                Servicios
+            </div>
+            <div className="md:pl-64">
+                <div className="flex-1 h-full">
+                    <header className="fixed top-0 left-0 w-full bg-white border-b z-50 py-2 md:hidden">
+                        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+                            <NavLink href="/" className="md:hidden text-2xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 text-transparent bg-clip-text">
+                                Turnero App
                             </NavLink>
-                            <NavLink 
-                                href="/schedule" 
-                                className="font-medium" 
-                                onClick={() => setOpen(false)}
-                            >
-                                Cronograma
-                            </NavLink>
-                            <div className="mt-2">
-                                <UserButton
-                                    appearance={{ elements: { userButtonAvatarBox: "size-full" } }}
-                                />
+                            <div className="md:hidden">
+                                <Sheet>
+                                    <SheetTrigger asChild>
+                                        <button className="cursor-pointer text-blue-600">
+                                            <Menu size={30} />
+                                        </button>
+                                    </SheetTrigger>
+                                    <SheetContent side="left" className="p-0 bg-white border-r w-72">
+                                        <div className="space-y-4 py-4 flex flex-col h-full">
+                                            <div className="px-3 py-2 flex-1">
+                                                <div className="mb-4">
+                                                    <NavLink href="/" className="flex items-center">
+                                                        <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 text-transparent bg-clip-text">
+                                                            Turnero App
+                                                        </span>
+                                                    </NavLink>
+                                                </div>
+                                                <div className="space-y-1">
+                                                    {routes.map((route) => (
+                                                        <NavLink
+                                                            key={`${route.href}-${route.label}`}
+                                                            href={route.href}
+                                                            onClick={() => {
+                                                                const closeEvent = new Event('close-sheet');
+                                                                window.dispatchEvent(closeEvent);
+                                                            }}
+                                                            className={cn(
+                                                                "w-full flex items-center gap-x-2 text-gray-600 text-sm font-[500] pl-6 py-4 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all",
+                                                                route.color
+                                                            )}
+                                                        >
+                                                            <route.icon className="h-5 w-5" />
+                                                            {route.label}
+                                                        </NavLink>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div className="px-3 py-2">
+                                                <div className="px-4 py-2">
+                                                    <UserButton
+                                                        appearance={{ 
+                                                            elements: { 
+                                                                userButtonAvatarBox: "size-full"
+                                                            } 
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </SheetContent>
+                                </Sheet>
                             </div>
                         </div>
-
-                        {/* Footer */}
-                        <div className="mt-auto pt-6 pb-4 border-t border-gray-200">
-                            <div className="flex flex-col gap-3 text-sm text-gray-600">
-                                <p className="font-medium text-gray-800">¿Necesitás ayuda?</p>
-                                <a href="mailto:turneroapp@gmail.com" className="flex items-center gap-2 hover:text-blue-600">
-                                    <span>turneroapp@gmail.com</span>
-                                </a>
-                                <a href="tel:+5493512431491" className="flex items-center gap-2 hover:text-blue-600">
-                                    <span>+5493512431491</span>
-                                </a>
-                                <div className="text-xs mt-2">
-                                    © 2024 Turnero App. Todos los derechos reservados.
-                                </div>
-                            </div>
-                        </div>
-                    </nav>
-                )}
-            </header>
-            <main className="container my-6 mx-auto pt-16">{children}</main>
-        </>
+                    </header>
+                    <main className="container my-6 mx-auto px-4 pt-24 md:pt-6">
+                        {children}
+                    </main>
+                </div>
+            </div>
+        </div>
     );
 }

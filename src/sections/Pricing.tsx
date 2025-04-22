@@ -8,23 +8,23 @@ import { useState } from "react";
 const plans = [
   {
     name: "Básico",
-    monthlyPrice: 9990,
+    monthlyPrice: 7990,
     description: "Ideal para quienes están empezando a organizar su negocio.",
     features: [
       "Agenda online de citas ilimitadas",
-      "Recordatorios y confirmación por WhatsApp",
+      "Recordatorios y confirmación por email",
       "Gestión de clientes",
-      "Recordatorios automáticos",
       "Control de ingresos",
     ],
     popular: false,
   },
   {
     name: "Profesional",
-    monthlyPrice: 18990,
+    monthlyPrice: 12990,
     description: "Perfecto para quienes quieren dar un paso más.",
     features: [
       "Todo lo del plan básico, más:",
+      "Recordatorios y confirmación por Bot de WhatsApp",
       "Estadísticas de crecimiento",
       "Multilples sucursales",
       "Encuestas de satisfacción",
@@ -33,7 +33,7 @@ const plans = [
   },
   {
     name: "Avanzado",
-    monthlyPrice: 27990,
+    monthlyPrice: 22990,
     description: "Para quienes buscan tener un control completo.",
     features: [
       "Todo lo del plan profesional, más",

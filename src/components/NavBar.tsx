@@ -29,7 +29,7 @@ export default function Navbar() {
                 </Link>
 
                 {/* Desktop nav */}
-                <NavigationMenu className="hidden md:flex">
+                <NavigationMenu className="hidden lg:flex">
                     <NavigationMenuList className="flex gap-6 items-center">
                         {/* Soluciones dropdown */}
                         <NavigationMenuItem>
@@ -158,14 +158,14 @@ export default function Navbar() {
                         </div>
 
                         {/* Precios */}
-                        <a href="#pricing" className="flex md:hidden font-medium" onClick={() => setOpen(false)}>
+                        <a href="#pricing" className="flex lg:hidden font-medium" onClick={() => setOpen(false)}>
                             Precios
                         </a>
 
                         {isSignedIn && (
                             <>
                                 <a href="/events" className="font-medium" onClick={() => setOpen(false)}>
-                                    Mi negocio
+                                    Mi Negocio
                                 </a>
                                 <UserButton />
                             </>
@@ -183,7 +183,7 @@ export default function Navbar() {
                             <Button
                                 asChild
                                 variant="outline"
-                                className="cursor-pointer border-blue-600 text-blue-600 hover:bg-blue-50 text-xl flex md:hidden"
+                                className="cursor-pointer border-blue-600 text-blue-600 hover:bg-blue-50 text-xl flex lg:hidden"
                             >
                                 <SignInButton mode="modal">
                                     <span>Ir a mi cuenta</span>
@@ -192,7 +192,7 @@ export default function Navbar() {
                             <Button
                                 asChild
                                 variant="outline"
-                                className="cursor-pointer border-blue-600 text-blue-600 hover:bg-blue-50 text-xl flex md:hidden"
+                                className="cursor-pointer border-blue-600 text-blue-600 hover:bg-blue-50 text-xl flex lg:hidden"
                             >
                                 <SignUpButton mode="modal">
                                     <span>Registrarse</span>
