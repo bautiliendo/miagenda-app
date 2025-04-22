@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ComponentProps } from "react"
 
-export function NavLink({ className, ...props }: ComponentProps<typeof Link>) {
+export function NavLink({ className, noHoverEffect, ...props }: ComponentProps<typeof Link> & { noHoverEffect?: boolean }) {
   const path = usePathname()
   const isActive = path === props.href
 
@@ -16,7 +16,9 @@ export function NavLink({ className, ...props }: ComponentProps<typeof Link>) {
         "transition-colors",
         isActive
           ? "text-foreground"
-          : "text-muted-foreground hover:text-foreground",
+          : noHoverEffect 
+            ? "text-muted-foreground" 
+            : "text-muted-foreground hover:text-foreground",
         className
       )}
     />

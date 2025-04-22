@@ -39,7 +39,6 @@ export function CopyEventButton({
         </Button>
     )
 }
-
 function getCopyIcon(copyState: CopyState) {
   switch (copyState) {
     case "idle":

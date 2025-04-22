@@ -7,7 +7,7 @@ import timeAnimation from '@/../public/animations/time.json'; // Asegurate que e
 
 export default function Hero() {
   return (
-    <section className="w-full bg-white py-24 flex items-center min-h-[90vh]">
+    <section id="hero" className="w-full bg-white py-24 flex items-center min-h-[90vh] scroll-mt-20">
       <div className="max-w-6xl mx-auto px-4 flex flex-col-reverse md:flex-row items-center justify-between gap-12">
 
         {/* Texto a la izquierda */}
@@ -20,8 +20,10 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
-            <Button className="bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-600 hover:to-blue-800 text-lg px-6 py-3 rounded-full">
-              Empezar prueba gratis
+            <Button 
+              asChild
+              className="bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-600 hover:to-blue-800 text-lg px-6 py-3 rounded-full">
+              <a href="#pricing">Empezar prueba gratis</a>
             </Button>
             <span className="text-gray-600 text-sm hidden lg:flex">Empezá hoy a tener un negocio más profesional, claro y organizado.</span>
           </div>

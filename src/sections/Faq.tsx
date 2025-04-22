@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 
 export default function FAQ() {
   return (
-    <section className="max-w-3xl mx-auto px-4 py-16">
+<section id="faq" className="max-w-3xl mx-auto px-4 py-16 scroll-mt-20">
       <motion.h2
         className="text-4xl font-bold text-center mb-10 text-gray-900"
         initial={{ opacity: 0, y: 20 }}

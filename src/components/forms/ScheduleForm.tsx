@@ -132,7 +132,7 @@ export function ScheduleForm({
                         <Fragment key={dayOfWeek}>
                             <div className="flex items-center gap-2">
                                 <div className="capitalize text-sm font-semibold">
-                                    {dayOfWeek.substring(0, 3)}
+                                    {dayOfWeek}
                                 </div>
                                 <Button
                                     type="button"
@@ -207,7 +207,7 @@ export function ScheduleForm({
 
                 <div className="flex gap-2 justify-end">
                     <Button disabled={form.formState.isSubmitting} type="submit">
-                        Save
+                        Guardar
                     </Button>
                 </div>
             </form>

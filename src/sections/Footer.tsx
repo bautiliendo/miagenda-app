@@ -21,7 +21,7 @@ export default function Footer() {
           <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-700 mb-3">Navegación</h3>
           <ul className="space-y-2 text-sm">
             <li><a href="#hero" className="hover:text-blue-600">Inicio</a></li>
-            <li><a href="#soluciones" className="hover:text-blue-600">Soluciones</a></li>
+            <li><a href="#solutions" className="hover:text-blue-600">Soluciones</a></li>
             <li><a href="#pricing" className="hover:text-blue-600">Precios</a></li>
             <li><a href="#faq" className="hover:text-blue-600">Preguntas frecuentes</a></li>
           </ul>

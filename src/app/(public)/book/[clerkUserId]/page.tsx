@@ -31,7 +31,7 @@ export default async function BookingPage({
   const { fullName } = await (await clerkClient()).users.getUser(clerkUserId)
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-6xl mx-auto">
       <div className="text-4xl md:text-5xl font-semibold mb-4 text-center">
         {fullName}
       </div>

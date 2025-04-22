@@ -1,81 +1,103 @@
-// import { Button } from "@/components/ui/button"
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardFooter,
-//   CardHeader,
-//   CardTitle,
-// } from "@/components/ui/card"
-// import { db } from "@/drizzle/db"
-// import { formatEventDescription } from "@/lib/formatters"
-// import { clerkClient } from "@clerk/nextjs/server"
-// import Link from "next/link"
-// import { notFound } from "next/navigation"
+import { MeetingForm } from "@/components/forms/MeetingForm"
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { db } from "@/drizzle/db"
+import { getValidTimesFromSchedule } from "@/lib/getValidTimesFromSchedule"
+import { clerkClient } from "@clerk/nextjs/server"
+import {
+  addMonths,
+  eachMinuteOfInterval,
+  endOfDay,
+  roundToNearestMinutes,
+} from "date-fns"
+import Link from "next/link"
+import { notFound } from "next/navigation"
 
-// export const revalidate = 0
+export const revalidate = 0
 
-export default function BookEventPage() {
-    //   params: { clerkUserId },
-    // }: {
-    //   params: { clerkUserId: string }
-    // }) {
-    //   const events = await db.query.EventTable.findMany({
-    //     where: ({ clerkUserId: userIdCol, isActive }, { eq, and }) =>
-    //       and(eq(userIdCol, clerkUserId), eq(isActive, true)),
-    //     orderBy: ({ name }, { asc, sql }) => asc(sql`lower(${name})`),
-    //   })
+export default async function BookEventPage({
+  params,
+}: {
+  params: { clerkUserId: string; eventId: string }
+}) {
+  const { clerkUserId, eventId } = await params
 
-    //   if (events.length === 0) return notFound()
+  const event = await db.query.EventTable.findFirst({
+    where: ({ clerkUserId: userIdCol, isActive, id }, { eq, and }) =>
+      and(eq(isActive, true), eq(userIdCol, clerkUserId), eq(id, eventId)),
+  })
 
-    //   const { fullName } = await clerkClient().users.getUser(clerkUserId)
+  if (event == null) return notFound()
 
-    return <h1>Hi</h1>
-    // <div className="max-w-5xl mx-auto">
-    //   <div className="text-4xl md:text-5xl font-semibold mb-4 text-center">
-    //     {fullName}
-    //   </div>
-    //   <div className="text-muted-foreground mb-6 max-w-sm mx-auto text-center">
-    //     Welcome to my scheduling page. Please follow the instructions to add an
-    //     event to my calendar.
-    //   </div>
-    //   <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
-    //     {events.map(event => (
-    //       <EventCard key={event.id} {...event} />
-    //     ))}
-    //   </div>
-    // </div>
+  const calendarUser = await (await clerkClient()).users.getUser(clerkUserId)
+  const startDate = roundToNearestMinutes(new Date(), {
+    nearestTo: 15,
+    roundingMethod: "ceil",
+  })
+  const endDate = endOfDay(addMonths(startDate, 2))
+
+  const validTimes = await getValidTimesFromSchedule(
+    eachMinuteOfInterval({ start: startDate, end: endDate }, { step: 15 }),
+    event
+  )
+
+  if (validTimes.length === 0) {
+    return <NoTimeSlots event={event} calendarUser={calendarUser} />
+  }
+
+  return (
+    <Card className="max-w-4xl mx-auto">
+      <CardHeader>
+        <CardTitle>
+          Agendá {event.name} con {calendarUser.fullName}
+        </CardTitle>
+        {event.description && (
+          <CardDescription>{event.description}</CardDescription>
+        )}
+      </CardHeader>
+      <CardContent>
+        <MeetingForm
+          validTimes={validTimes}
+          eventId={event.id}
+          clerkUserId={clerkUserId}
+        />
+      </CardContent>
+    </Card>
+  )
 }
 
-// type EventCardProps = {
-//   id: string
-//   name: string
-//   clerkUserId: string
-//   description: string | null
-//   durationInMinutes: number
-// }
-
-// function EventCard({
-//   id,
-//   name,
-//   description,
-//   clerkUserId,
-//   durationInMinutes,
-// }: EventCardProps) {
-//   return (
-//     <Card className="flex flex-col">
-//       <CardHeader>
-//         <CardTitle>{name}</CardTitle>
-//         <CardDescription>
-//           {formatEventDescription(durationInMinutes)}
-//         </CardDescription>
-//       </CardHeader>
-//       {description != null && <CardContent>{description}</CardContent>}
-//       <CardFooter className="flex justify-end gap-2 mt-auto">
-//         <Button asChild>
-//           <Link href={`/book/${clerkUserId}/${id}`}>Select</Link>
-//         </Button>
-//       </CardFooter>
-//     </Card>
-//   )
-// }
+function NoTimeSlots({
+  event,
+  calendarUser,
+}: {
+  event: { name: string; description: string | null }
+  calendarUser: { id: string; fullName: string | null }
+}) {
+  return (
+    <Card className="max-w-md mx-auto">
+      <CardHeader>
+        <CardTitle>
+          Agendá {event.name} con {calendarUser.fullName}
+        </CardTitle>
+        {event.description && (
+          <CardDescription>{event.description}</CardDescription>
+        )}
+      </CardHeader>
+      <CardContent>
+        {calendarUser.fullName} Tiene su agenda llena. Por favor volvé más tarde o elegí un servicio más corto.
+      </CardContent>
+      <CardFooter>
+        <Button asChild>
+          <Link href={`/book/${calendarUser.id}`}>Elegir otro servicio</Link>
+        </Button>
+      </CardFooter>
+    </Card>
+  )
+}

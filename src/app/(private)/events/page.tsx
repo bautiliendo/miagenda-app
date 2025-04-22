@@ -28,18 +28,25 @@ export default async function Eventspage() {
 
 
     return (
-        <>
+        <div className="p-4">
             <div className="flex gap-4 items-baseline max-w-6xl mx-auto">
                 <h1 className="text-3xl lg:text-4xl xl:text-5xl font-semibold mb-6">
-                    Eventos
+                    Servicios
                 </h1>
 
-                {events.length > 0 ? (<Button
-                    asChild
-                    variant="outline"
-                    className="ml-4 border-blue-600 text-blue-600 hover:bg-blue-50 text-xl">
-                    <Link href='/events/new'><CalendarPlus className="mr-4 size-6 " />Nuevo Evento</Link>
-                </Button>) : ''}
+                {events.length > 0 ? (
+                    <Button
+                        asChild
+                        variant="outline"
+                        className="ml-4 border-blue-600 text-blue-600 hover:bg-blue-50 text-sm md:text-base lg:text-lg"
+                    >
+                        <Link href='/events/new'>
+                            <CalendarPlus className="mr-2 size-4 md:size-5 lg:size-6" />
+                            <span className="hidden sm:inline">Nuevo Servicio</span>
+                            <span className="sm:hidden">Nuevo</span>
+                        </Link>
+                    </Button>
+                ) : ''}
             </div>
             {events.length > 0 ? (
                 <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(400px,1fr))] max-w-6xl mx-auto">
@@ -50,18 +57,22 @@ export default async function Eventspage() {
             ) : (
                 <div className="flex flex-col items-center gap-4">
                     <CalendarRange className="size-16 mx-auto" />
-                    No se encontro ningun evento. Crea el primer evento para empezar !
-                    <Button size="lg"
-                        className="ml-4 border-blue-600 text-blue-600 hover:bg-blue-50 text-xl"
+                    No se encontro ningun servicio. Crea el primero para empezar !
+                    <Button
+                        size="sm"
+                        className="ml-4 border-blue-600 text-blue-600 hover:bg-blue-50 text-sm md:text-base lg:text-lg"
                         variant="outline"
-                        asChild>
+                        asChild
+                    >
                         <Link href="/events/new">
-                            <CalendarPlus className="mr-4 size-6" /> Nuevo Evento
+                            <CalendarPlus className="mr-2 size-4 md:size-5 lg:size-6" />
+                            <span className="hidden sm:inline">Nuevo Servicio</span>
+                            <span className="sm:hidden">Nuevo</span>
                         </Link>
                     </Button>
                 </div>
             )}
-        </>
+        </div>
     )
 }
 

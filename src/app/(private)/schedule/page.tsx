@@ -19,7 +19,7 @@ export default async function SchedulePage() {
     return (
         <Card className="max-w-md mx-auto">
             <CardHeader>
-                <CardTitle>Cronograma de eventos</CardTitle>
+                <CardTitle>Ajustá tu disponibilidad</CardTitle>
             </CardHeader>
             <CardContent>
                 <ScheduleForm schedule={schedule} />

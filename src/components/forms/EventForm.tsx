@@ -83,7 +83,7 @@ export function EventForm({
                     name="name"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Nombre del Evento</FormLabel>
+                            <FormLabel>Nombre del Servicio</FormLabel>
                             <FormControl>
                                 <Input {...field} />
                             </FormControl>
@@ -118,7 +118,7 @@ export function EventForm({
                                 <Textarea className="resize-none h-32" {...field} />
                             </FormControl>
                             <FormDescription>
-                                Descripción opcional del evento
+                                Descripción opcional del servicio
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -139,7 +139,7 @@ export function EventForm({
                                 <FormLabel>Activo</FormLabel>
                             </div>
                             <FormDescription>
-                                Los eventos inactivos no serán visibles para que los usuarios los reserven
+                                Los servicios inactivos no serán visibles para que los usuarios los reserven
                             </FormDescription>
                         </FormItem>
                     )}
@@ -160,7 +160,7 @@ export function EventForm({
                                     <AlertDialogTitle>¿Está seguro?</AlertDialogTitle>
                                     <AlertDialogDescription>
                                         Esta acción no se puede deshacer. Esto eliminará permanentemente
-                                        este evento.
+                                        este servicio.
                                     </AlertDialogDescription>
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>

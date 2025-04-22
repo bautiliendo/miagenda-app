@@ -56,7 +56,7 @@ export default function Pricing() {
   };
 
   return (
-    <section className="py-20 px-4 max-w-6xl mx-auto">
+    <section id="pricing" className="py-20 px-4 max-w-6xl mx-auto scroll-mt-20">
       <motion.h2
         className="text-4xl font-bold mb-4 text-center"
         initial={{ opacity: 0, y: 20 }}
