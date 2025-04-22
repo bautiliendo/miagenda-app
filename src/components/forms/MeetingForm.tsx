@@ -27,7 +27,7 @@ import {
 import {
   formatDate,
   formatTimeString,
-  formatTimezoneOffset,
+  // formatTimezoneOffset,
 } from "@/lib/formatters"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { CalendarIcon } from "lucide-react"
@@ -50,18 +50,18 @@ export function MeetingForm({
   const form = useForm<z.infer<typeof meetingFormSchema>>({
     resolver: zodResolver(meetingFormSchema),
     defaultValues: {
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      timezone: "America/Cordoba",
       guestName: "",
       guestEmail: "",
       guestNotes: "",
     },
   })
 
-  const timezone = form.watch("timezone")
+  const timezone = "America/Cordoba"
   const date = form.watch("date")
   const validTimesInTimezone = useMemo(() => {
     return validTimes.map(date => toZonedTime(date, timezone))
-  }, [validTimes, timezone])
+  }, [validTimes])
 
   async function onSubmit(values: z.infer<typeof meetingFormSchema>) {
     const data = await createMeeting({
@@ -79,40 +79,20 @@ export function MeetingForm({
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex gap-6 flex-col"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-6 flex-col">
         {form.formState.errors.root && (
-          <div className="text-destructive text-sm">
+          <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
             {form.formState.errors.root.message}
           </div>
         )}
-        <FormField
-          control={form.control}
-          name="timezone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Timezone</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {Intl.supportedValuesOf("timeZone").map(timezone => (
-                    <SelectItem key={timezone} value={timezone}>
-                      {timezone}
-                      {` (${formatTimezoneOffset(timezone)})`}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
+        <div className="bg-gray-50/50 p-4 rounded-lg border">
+          <div className="text-gray-700 font-medium">Zona Horaria</div>
+          <div className="text-gray-600 mt-1">
+            Argentina (GMT-3)
+          </div>
+        </div>
+
         <div className="flex gap-4 flex-col md:flex-row">
           <FormField
             control={form.control}
@@ -120,20 +100,20 @@ export function MeetingForm({
             render={({ field }) => (
               <Popover>
                 <FormItem className="flex-1">
-                  <FormLabel>Día</FormLabel>
+                  <FormLabel className="text-gray-700">Fecha</FormLabel>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
                         variant="outline"
                         className={cn(
-                          "pl-3 text-left font-normal flex w-full",
-                          !field.value && "text-muted-foreground"
+                          "pl-3 text-left font-normal flex w-full bg-white border-gray-200",
+                          !field.value && "text-gray-500"
                         )}
                       >
                         {field.value ? (
                           formatDate(field.value)
                         ) : (
-                          <span>Pick a date</span>
+                          <span>Seleccionar fecha</span>
                         )}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
@@ -150,6 +130,7 @@ export function MeetingForm({
                         )
                       }
                       initialFocus
+                      className="rounded-md border shadow-md"
                     />
                   </PopoverContent>
                   <FormMessage />
@@ -162,21 +143,21 @@ export function MeetingForm({
             name="startTime"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>Hora</FormLabel>
+                <FormLabel className="text-gray-700">Horario</FormLabel>
                 <Select
-                  disabled={date == null || timezone == null}
+                  disabled={date == null}
                   onValueChange={value =>
                     field.onChange(new Date(Date.parse(value)))
                   }
                   defaultValue={field.value?.toISOString()}
                 >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="bg-white border-gray-200">
                       <SelectValue
                         placeholder={
-                          date == null || timezone == null
-                            ? "Select a date/timezone first"
-                            : "Select a meeting time"
+                          date == null
+                            ? "Primero selecciona una fecha"
+                            : "Seleccionar horario"
                         }
                       />
                     </SelectTrigger>
@@ -194,21 +175,21 @@ export function MeetingForm({
                       ))}
                   </SelectContent>
                 </Select>
-
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
+
         <div className="flex gap-4 flex-col md:flex-row">
           <FormField
             control={form.control}
             name="guestName"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>Tu nombre</FormLabel>
+                <FormLabel className="text-gray-700">Nombre</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input className="bg-white border-gray-200" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -219,40 +200,50 @@ export function MeetingForm({
             name="guestEmail"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>Tu Email</FormLabel>
+                <FormLabel className="text-gray-700">Email</FormLabel>
                 <FormControl>
-                  <Input type="email" {...field} />
+                  <Input type="email" className="bg-white border-gray-200" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
+
         <FormField
           control={form.control}
           name="guestNotes"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Comentarios</FormLabel>
+              <FormLabel className="text-gray-700">Comentarios adicionales</FormLabel>
               <FormControl>
-                <Textarea className="resize-none" {...field} />
+                <Textarea 
+                  className="resize-none bg-white border-gray-200 min-h-[100px]" 
+                  placeholder="Agrega cualquier información adicional que necesites compartir..."
+                  {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <div className="flex gap-2 justify-end">
+        <div className="flex gap-3 justify-end pt-4 border-t">
           <Button
-            disabled={form.formState.isSubmitting}
             type="button"
             asChild
             variant="outline"
+            className="border-gray-200 hover:bg-gray-50"
+            disabled={form.formState.isSubmitting}
           >
             <Link href={`/book/${clerkUserId}`}>Cancelar</Link>
           </Button>
-          <Button disabled={form.formState.isSubmitting} type="submit">
-            Confirmar
+          <Button 
+            disabled={form.formState.isSubmitting}
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all"
+          >
+            {form.formState.isSubmitting ? "Confirmando..." : "Confirmar Reserva"}
           </Button>
         </div>
       </form>

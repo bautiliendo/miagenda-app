@@ -26,52 +26,59 @@ export default async function Eventspage() {
         orderBy: ({ createdAt }, { desc }) => desc(createdAt),
     });
 
-
     return (
-        <div className="p-4">
-            <div className="flex gap-4 items-baseline max-w-6xl mx-auto">
-                <h1 className="text-3xl lg:text-4xl xl:text-5xl font-semibold mb-6">
-                    Servicios
-                </h1>
+        <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-6">
+            <div className="max-w-6xl mx-auto">
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
+                    <div>
+                        <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900">
+                            Catálogo de Servicios
+                        </h1>
+                        <p className="mt-2 text-gray-600 text-lg">
+                            Gestiona los servicios que ofreces a tus clientes
+                        </p>
+                    </div>
 
-                {events.length > 0 ? (
                     <Button
                         asChild
-                        variant="outline"
-                        className="ml-4 border-blue-600 text-blue-600 hover:bg-blue-50 text-sm md:text-base lg:text-lg"
+                        variant="default"
+                        className="mt-4 md:mt-0 bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all"
                     >
                         <Link href='/events/new'>
-                            <CalendarPlus className="mr-2 size-4 md:size-5 lg:size-6" />
-                            <span className="hidden sm:inline">Nuevo Servicio</span>
-                            <span className="sm:hidden">Nuevo</span>
+                            <CalendarPlus className="mr-2 size-5" />
+                            <span>Añadir Nuevo Servicio</span>
                         </Link>
                     </Button>
-                ) : ''}
+                </div>
+
+                {events.length > 0 ? (
+                    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 auto-rows-fr">
+                        {events.map(event => (
+                            <EventCard key={event.id} {...event} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center py-16 bg-white rounded-lg shadow-sm border border-gray-100">
+                        <CalendarRange className="size-16 mx-auto text-blue-600 mb-4" />
+                        <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                            Sin servicios configurados
+                        </h3>
+                        <p className="text-gray-600 mb-6">
+                            Comienza añadiendo tu primer servicio para que tus clientes puedan realizar reservas.
+                        </p>
+                        <Button
+                            size="lg"
+                            className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all"
+                            asChild
+                        >
+                            <Link href="/events/new">
+                                <CalendarPlus className="mr-2 size-5" />
+                                <span>Crear Primer Servicio</span>
+                            </Link>
+                        </Button>
+                    </div>
+                )}
             </div>
-            {events.length > 0 ? (
-                <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(400px,1fr))] max-w-6xl mx-auto">
-                    {events.map(event => (
-                        <EventCard key={event.id} {...event} />
-                    ))}
-                </div>
-            ) : (
-                <div className="flex flex-col items-center gap-4">
-                    <CalendarRange className="size-16 mx-auto" />
-                    No se encontro ningun servicio. Crea el primero para empezar !
-                    <Button
-                        size="sm"
-                        className="ml-4 border-blue-600 text-blue-600 hover:bg-blue-50 text-sm md:text-base lg:text-lg"
-                        variant="outline"
-                        asChild
-                    >
-                        <Link href="/events/new">
-                            <CalendarPlus className="mr-2 size-4 md:size-5 lg:size-6" />
-                            <span className="hidden sm:inline">Nuevo Servicio</span>
-                            <span className="sm:hidden">Nuevo</span>
-                        </Link>
-                    </Button>
-                </div>
-            )}
         </div>
     )
 }
@@ -95,28 +102,42 @@ function EventCard({
     clerkUserId,
 }: EventCardProps) {
     return (
-        <Card className={cn("flex flex-col", !isActive && "border-secondary/50")}>
+        <Card className={cn(
+            "flex flex-col h-full transition-all duration-200 hover:shadow-lg",
+            !isActive && "opacity-75 bg-gray-50"
+        )}>
             <CardHeader className={cn(!isActive && "opacity-50")}>
-                <CardTitle>{name}</CardTitle>
-                <CardDescription>
+                <div className="flex items-center justify-between">
+                    <CardTitle className="text-xl text-gray-900">{name}</CardTitle>
+                    {isActive && (
+                        <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                            Activo
+                        </span>
+                    )}
+                </div>
+                <CardDescription className="text-gray-600 flex items-center mt-2">
+                    <CalendarRange className="size-4 mr-2" />
                     {formatEventDescription(durationInMinutes)}
                 </CardDescription>
             </CardHeader>
             {description != null && (
-                <CardContent className={cn(!isActive && "opacity-50")}>
-                    {description}
+                <CardContent className={cn("flex-grow", !isActive && "opacity-50")}>
+                    <p className="text-gray-700 line-clamp-3">{description}</p>
                 </CardContent>
             )}
-            <CardFooter className="flex justify-end gap-2 mt-auto">
+            <CardFooter className="flex flex-wrap justify-end gap-2 pt-4 border-t mt-auto">
                 {isActive && (
                     <CopyEventButton
                         variant="outline"
                         eventId={id}
                         clerkUserId={clerkUserId}
+                        className="w-full sm:w-auto"
                     />
                 )}
-                <Button asChild>
-                    <Link href={`/events/${id}/edit`}>Editar</Link>
+                <Button asChild variant="default" className="w-full sm:w-auto">
+                    <Link href={`/events/${id}/edit`}>
+                        Editar Servicio
+                    </Link>
                 </Button>
             </CardFooter>
         </Card>

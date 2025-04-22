@@ -8,22 +8,14 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormLabel,
-    FormMessage,
 } from "../ui/form"
 import { Button } from "../ui/button"
 import { DAYS_OF_WEEK_IN_ORDER } from "@/data/constants"
 import { scheduleFormSchema } from "@/schema/schedule"
 import { timeToInt } from "@/lib/utils"
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
 } from "../ui/select"
-import { formatTimezoneOffset } from "@/lib/formatters"
-import { Fragment, useState } from "react"
+import { useState } from "react"
 import { Plus, X } from "lucide-react"
 import { Input } from "../ui/input"
 import { saveSchedule } from "@/server/actions/schedule"
@@ -46,8 +38,7 @@ export function ScheduleForm({
     const form = useForm<z.infer<typeof scheduleFormSchema>>({
         resolver: zodResolver(scheduleFormSchema),
         defaultValues: {
-            timezone:
-                schedule?.timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone,
+            timezone: "America/Cordoba",
             availabilities: schedule?.availabilities.toSorted((a, b) => {
                 return timeToInt(a.startTime) - timeToInt(b.startTime)
             }),
@@ -89,125 +80,125 @@ export function ScheduleForm({
                 className="flex gap-6 flex-col"
             >
                 {form.formState.errors.root && (
-                    <div className="text-destructive text-sm">
+                    <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
                         {form.formState.errors.root.message}
                     </div>
                 )}
                 {form.formState.errors.availabilities && (
-                    <div className="text-destructive text-sm">
+                    <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
                         Hay horarios superpuestos. Por favor, corrige los horarios que se superponen.
                     </div>
                 )}
                 {successMessage && (
-                    <div className="text-green-500 text-sm">{successMessage}</div>
+                    <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-green-600 text-sm flex items-center gap-2">
+                        <div className="size-2 rounded-full bg-green-500" />
+                        {successMessage}
+                    </div>
                 )}
-                <FormField
-                    control={form.control}
-                    name="timezone"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Timezone</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                <FormControl>
-                                    <SelectTrigger>
-                                        <SelectValue />
-                                    </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                    {Intl.supportedValuesOf("timeZone").map(timezone => (
-                                        <SelectItem key={timezone} value={timezone}>
-                                            {timezone}
-                                            {` (${formatTimezoneOffset(timezone)})`}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
 
-                <div className="grid grid-cols-[auto,1fr] gap-y-6 gap-x-4">
-                    {DAYS_OF_WEEK_IN_ORDER.map(dayOfWeek => (
-                        <Fragment key={dayOfWeek}>
-                            <div className="flex items-center gap-2">
-                                <div className="capitalize text-sm font-semibold">
-                                    {dayOfWeek}
+                <div className="space-y-6">
+                    <div className="bg-gray-50/50 p-4 rounded-lg border">
+                        <div className="text-gray-700 font-medium">Zona Horaria</div>
+                        <div className="text-gray-600 mt-1">
+                            Argentina (GMT-3)
+                        </div>
+                    </div>
+
+                    <div className="space-y-6">
+                        {DAYS_OF_WEEK_IN_ORDER.map(dayOfWeek => (
+                            <div key={dayOfWeek} className="bg-white p-4 rounded-lg border">
+                                <div className="flex items-center justify-between mb-4">
+                                    <div className="capitalize font-medium text-gray-900">
+                                        {dayOfWeek}
+                                    </div>
+                                    <Button
+                                        type="button"
+                                        size="sm"
+                                        variant="outline"
+                                        onClick={() => {
+                                            addAvailability({
+                                                dayOfWeek,
+                                                startTime: "09:00",
+                                                endTime: "17:00",
+                                            })
+                                        }}
+                                        className="text-blue-600 border-blue-200 hover:bg-blue-50"
+                                    >
+                                        <Plus className="size-4 mr-2" />
+                                        Agregar Horario
+                                    </Button>
                                 </div>
-                                <Button
-                                    type="button"
-                                    className="size-6 p-1"
-                                    variant="outline"
-                                    onClick={() => {
-                                        addAvailability({
-                                            dayOfWeek,
-                                            startTime: "9:00",
-                                            endTime: "17:00",
-                                        })
-                                    }}
-                                >
-                                    <Plus className="size-4" />
-                                </Button>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                {groupedAvailabilityFields[dayOfWeek]?.map(
-                                    (field, labelIndex) => (
-                                        <div className="flex flex-col gap-1" key={field.id}>
-                                            <div className="flex gap-2 items-center">
-                                                <FormField
-                                                    control={form.control}
-                                                    name={`availabilities.${field.originalIndex}.startTime`}
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormControl>
-                                                                <Input
-                                                                    className="w-24"
-                                                                    aria-label={`${dayOfWeek} Start Time ${labelIndex + 1}`}
-                                                                    {...field}
-                                                                />
-                                                            </FormControl>
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                                -
-                                                <FormField
-                                                    control={form.control}
-                                                    name={`availabilities.${field.originalIndex}.endTime`}
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormControl>
-                                                                <Input
-                                                                    className="w-24"
-                                                                    aria-label={`${dayOfWeek} End Time ${labelIndex + 1}`}
-                                                                    {...field}
-                                                                />
-                                                            </FormControl>
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                                <Button
-                                                    type="button"
-                                                    className="size-6 p-1"
-                                                    variant="destructiveGhost"
-                                                    onClick={() => removeAvailability(field.originalIndex)}
-                                                >
-                                                    <X />
-                                                </Button>
+                                <div className="space-y-3">
+                                    {groupedAvailabilityFields[dayOfWeek]?.map(
+                                        (field, labelIndex) => (
+                                            <div
+                                                key={field.id}
+                                                className="flex flex-col gap-2 bg-gray-50/50 p-3 rounded-md"
+                                            >
+                                                <div className="flex gap-3 items-center">
+                                                    <FormField
+                                                        control={form.control}
+                                                        name={`availabilities.${field.originalIndex}.startTime`}
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormControl>
+                                                                    <Input
+                                                                        className="w-24"
+                                                                        placeholder="09:00"
+                                                                        aria-label={`${dayOfWeek} Hora inicio ${labelIndex + 1}`}
+                                                                        {...field}
+                                                                    />
+                                                                </FormControl>
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                    <span className="text-gray-500">hasta</span>
+                                                    <FormField
+                                                        control={form.control}
+                                                        name={`availabilities.${field.originalIndex}.endTime`}
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormControl>
+                                                                    <Input
+                                                                        className="w-24"
+                                                                        placeholder="17:00"
+                                                                        aria-label={`${dayOfWeek} Hora fin ${labelIndex + 1}`}
+                                                                        {...field}
+                                                                    />
+                                                                </FormControl>
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                    <Button
+                                                        type="button"
+                                                        variant="ghost"
+                                                        className="text-red-500 hover:text-red-600 hover:bg-red-50 ml-auto"
+                                                        onClick={() => removeAvailability(field.originalIndex)}
+                                                    >
+                                                        <X className="size-4" />
+                                                    </Button>
+                                                </div>
+                                                {form.formState.errors.availabilities?.[field.originalIndex]?.message && (
+                                                    <div className="text-red-500 text-sm">
+                                                        {form.formState.errors.availabilities?.[field.originalIndex]?.message}
+                                                    </div>
+                                                )}
                                             </div>
-                                            <div className="text-destructive text-sm">
-                                                {form.formState.errors.availabilities?.[field.originalIndex]?.message}
-                                            </div>
-                                        </div>
-                                    )
-                                )}
+                                        )
+                                    )}
+                                </div>
                             </div>
-                        </Fragment>
-                    ))}
+                        ))}
+                    </div>
                 </div>
 
-                <div className="flex gap-2 justify-end">
-                    <Button disabled={form.formState.isSubmitting} type="submit">
-                        Guardar
+                <div className="flex justify-end pt-4 border-t">
+                    <Button
+                        disabled={form.formState.isSubmitting}
+                        type="submit"
+                        className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all"
+                    >
+                        {form.formState.isSubmitting ? "Guardando..." : "Guardar Cambios"}
                     </Button>
                 </div>
             </form>

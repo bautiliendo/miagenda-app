@@ -74,107 +74,124 @@ export function EventForm({
                 className="flex gap-6 flex-col"
             >
                 {form.formState.errors.root && (
-                    <div className="text-destructive text-sm">
+                    <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
                         {form.formState.errors.root.message}
                     </div>
                 )}
-                <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Nombre del Servicio</FormLabel>
-                            <FormControl>
-                                <Input {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                El nombre que los usuarios verán al reservar
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="durationInMinutes"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Duración</FormLabel>
-                            <FormControl>
-                                <Input type="number" {...field} />
-                            </FormControl>
-                            <FormDescription>En minutos</FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Descripción</FormLabel>
-                            <FormControl>
-                                <Textarea className="resize-none h-32" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                Descripción opcional del servicio
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="isActive"
-                    render={({ field }) => (
-                        <FormItem>
-                            <div className="flex items-center gap-2">
+
+                <div className="space-y-6">
+                    <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                            <FormItem className="bg-gray-50/50 p-4 rounded-lg border">
+                                <FormLabel className="text-gray-700">Nombre del Servicio</FormLabel>
                                 <FormControl>
-                                    <Switch
-                                        checked={field.value}
-                                        onCheckedChange={field.onChange}
+                                    <Input className="bg-white border-gray-200" {...field} />
+                                </FormControl>
+                                <FormDescription className="text-gray-600">
+                                    El nombre que los usuarios verán al reservar
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="durationInMinutes"
+                        render={({ field }) => (
+                            <FormItem className="bg-gray-50/50 p-4 rounded-lg border">
+                                <FormLabel className="text-gray-700">Duración</FormLabel>
+                                <FormControl>
+                                    <Input 
+                                        type="number" 
+                                        className="bg-white border-gray-200 w-32" 
+                                        {...field} 
                                     />
                                 </FormControl>
-                                <FormLabel>Activo</FormLabel>
-                            </div>
-                            <FormDescription>
-                                Los servicios inactivos no serán visibles para que los usuarios los reserven
-                            </FormDescription>
-                        </FormItem>
-                    )}
-                />
-                <div className="flex gap-2 justify-end">
+                                <FormDescription className="text-gray-600">
+                                    Duración del servicio en minutos
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="description"
+                        render={({ field }) => (
+                            <FormItem className="bg-gray-50/50 p-4 rounded-lg border">
+                                <FormLabel className="text-gray-700">Descripción</FormLabel>
+                                <FormControl>
+                                    <Textarea 
+                                        className="resize-none h-32 bg-white border-gray-200" 
+                                        placeholder="Describe los detalles del servicio..."
+                                        {...field} 
+                                    />
+                                </FormControl>
+                                <FormDescription className="text-gray-600">
+                                    Añade una descripción detallada de tu servicio
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="isActive"
+                        render={({ field }) => (
+                            <FormItem className="bg-gray-50/50 p-4 rounded-lg border">
+                                <div className="flex items-center gap-3">
+                                    <FormControl>
+                                        <Switch
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                        />
+                                    </FormControl>
+                                    <FormLabel className="text-gray-700 !mt-0">Servicio Activo</FormLabel>
+                                </div>
+                                <FormDescription className="text-gray-600 mt-2">
+                                    Los servicios inactivos no estarán disponibles para reservas
+                                </FormDescription>
+                            </FormItem>
+                        )}
+                    />
+                </div>
+
+                <div className="flex gap-3 justify-end pt-4 border-t">
                     {event && (
                         <AlertDialog>
                             <AlertDialogTrigger asChild>
                                 <Button
                                     variant="destructiveGhost"
+                                    className="hover:bg-red-50"
                                     disabled={isDeletePending || form.formState.isSubmitting}
                                 >
-                                    Eliminar
+                                    Eliminar Servicio
                                 </Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                                 <AlertDialogHeader>
-                                    <AlertDialogTitle>¿Está seguro?</AlertDialogTitle>
+                                    <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
                                     <AlertDialogDescription>
-                                        Esta acción no se puede deshacer. Esto eliminará permanentemente
-                                        este servicio.
+                                        Esta acción eliminará permanentemente este servicio y no se puede deshacer.
                                     </AlertDialogDescription>
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
-                                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                    <AlertDialogCancel className="border-gray-200">Cancelar</AlertDialogCancel>
                                     <AlertDialogAction
                                         disabled={isDeletePending || form.formState.isSubmitting}
                                         variant="destructive"
+                                        className="bg-red-600 hover:bg-red-700"
                                         onClick={() => {
                                             startDeleteTransition(async () => {
                                                 const data = await deleteEvent(event.id)
-
                                                 if (data?.error) {
                                                     form.setError("root", {
-                                                        message: "Hubo un error al eliminar su evento",
+                                                        message: "Error al eliminar el servicio"
                                                     })
                                                 }
                                             })
@@ -188,18 +205,20 @@ export function EventForm({
                     )}
 
                     <Button
-                        disabled={isDeletePending || form.formState.isSubmitting}
                         type="button"
                         asChild
                         variant="outline"
+                        className="border-gray-200 hover:bg-gray-50"
+                        disabled={isDeletePending || form.formState.isSubmitting}
                     >
                         <Link href="/events">Cancelar</Link>
                     </Button>
                     <Button
                         disabled={isDeletePending || form.formState.isSubmitting}
                         type="submit"
+                        className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all"
                     >
-                        Guardar
+                        {form.formState.isSubmitting ? "Guardando..." : "Guardar Servicio"}
                     </Button>
                 </div>
             </form>

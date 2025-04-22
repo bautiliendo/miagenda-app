@@ -7,8 +7,6 @@ import {
   Menu, 
   LayoutDashboard, 
   Calendar,
-  Settings,
-  CreditCard,
   Users,
   LucideIcon
 } from "lucide-react"
@@ -37,30 +35,30 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
             variant: 'default'
         },
         {
-            label: 'Cronograma',
+            label: 'Mi disponibilidad',
             icon: Calendar,
             href: '/schedule',
             color: 'text-violet-600',
             variant: 'default'
         },
         {
-            label: 'Usuarios',
+            label: 'Clientes',
             icon: Users,
-            href: '/',
+            href: '#',
             variant: 'ghost'
         },
         {
-            label: 'Configuración',
-            icon: Settings,
-            href: '/',
+            label: 'Agenda',
+            icon: Calendar,
+            href: '#',
             variant: 'ghost'
         },
-        {
-            label: 'Pagos',
-            icon: CreditCard,
-            href: '/',
-            variant: 'ghost'
-        },
+        // {
+        //     label: 'Pagos',
+        //     icon: CreditCard,
+        //     href: '/',
+        //     variant: 'ghost'
+        // },
     ];
 
     return (
