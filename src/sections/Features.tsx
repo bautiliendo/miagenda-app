@@ -58,7 +58,7 @@ export default function Features() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        ¿Por qué elegir Turnero App?
+        ¿Por qué elegir AgendIA?
       </motion.h2>
       <motion.p
         className="text-gray-600 mb-12 text-center max-w-2xl mx-auto"

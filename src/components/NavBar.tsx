@@ -25,7 +25,7 @@ export default function Navbar() {
         <header className="fixed top-0 left-0 w-full bg-white border-b z-50 py-2">
             <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
                 <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-transparent bg-clip-text">
-                    Turnero App
+                    AgendIA
                 </Link>
 
                 {/* Desktop nav */}
@@ -57,7 +57,7 @@ export default function Navbar() {
                             </NavigationMenuTrigger>
                             <NavigationMenuContent className="bg-white p-4 rounded shadow-md">
                                 <ul className="grid gap-3 p-2 w-64">
-                                    <li><a href="#faq" className="hover:text-blue-600">¿Cuánto cuesta usar Turnero App?</a></li>
+                                    <li><a href="#faq" className="hover:text-blue-600">¿Cuánto cuesta usar AgendIA?</a></li>
                                     <li><a href="#faq" className="hover:text-blue-600">¿Cómo gestiono mis turnos?</a></li>
                                     <li><a href="#faq" className="hover:text-blue-600">¿Pueden mis clientes agendarse solos?</a></li>
                                     <li><a href="#faq" className="hover:text-blue-600">¿Necesito conocimientos técnicos para usarla?</a></li>
@@ -148,7 +148,7 @@ export default function Navbar() {
                             </button>
                             {openFaq && (
                                 <div className="ml-4 mt-2 flex flex-col gap-1">
-                                    <a href="#faq" className="hover:text-blue-600" onClick={() => setOpen(false)}>¿Cuánto cuesta usar Turnero App?</a>
+                                    <a href="#faq" className="hover:text-blue-600" onClick={() => setOpen(false)}>¿Cuánto cuesta usar AgendIA?</a>
                                     <a href="#faq" className="hover:text-blue-600" onClick={() => setOpen(false)}>¿Cómo gestiono mis turnos?</a>
                                     <a href="#faq" className="hover:text-blue-600" onClick={() => setOpen(false)}>¿Pueden mis clientes agendarse solos?</a>
                                     <a href="#faq" className="hover:text-blue-600" onClick={() => setOpen(false)}>¿Necesito conocimientos técnicos para usarla?</a>
@@ -212,7 +212,7 @@ export default function Navbar() {
                                 <span>+5493512431491</span>
                             </a>
                             <div className="text-xs mt-2">
-                                © 2024 Turnero App. Todos los derechos reservados.
+                                © 2024 AgendIA. Todos los derechos reservados.
                             </div>
                         </div>
                     </div>
