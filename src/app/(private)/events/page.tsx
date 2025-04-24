@@ -29,7 +29,7 @@ export default async function Eventspage() {
     return (
         <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-6">
             <div className="max-w-6xl mx-auto">
-                <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
+                <div className="flex flex-col mb-8">
                     <div>
                         <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900">
                             Catálogo de Servicios
@@ -37,18 +37,17 @@ export default async function Eventspage() {
                         <p className="mt-2 text-gray-600 text-lg">
                             Gestiona los servicios que ofreces a tus clientes
                         </p>
+                        <Button
+                            asChild
+                            variant="default"
+                            className="mt-6 bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all"
+                        >
+                            <Link href='/events/new'>
+                                <CalendarPlus className="mr-2 size-5" />
+                                <span>Añadir Nuevo Servicio</span>
+                            </Link>
+                        </Button>
                     </div>
-
-                    <Button
-                        asChild
-                        variant="default"
-                        className="mt-4 md:mt-0 bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all"
-                    >
-                        <Link href='/events/new'>
-                            <CalendarPlus className="mr-2 size-5" />
-                            <span>Añadir Nuevo Servicio</span>
-                        </Link>
-                    </Button>
                 </div>
 
                 {events.length > 0 ? (
@@ -131,10 +130,10 @@ function EventCard({
                         variant="outline"
                         eventId={id}
                         clerkUserId={clerkUserId}
-                        className="w-full sm:w-auto"
+                        className="w-full"
                     />
                 )}
-                <Button asChild variant="default" className="w-full sm:w-auto">
+                <Button asChild variant="default" className="w-full">
                     <Link href={`/events/${id}/edit`}>
                         Editar Servicio
                     </Link>

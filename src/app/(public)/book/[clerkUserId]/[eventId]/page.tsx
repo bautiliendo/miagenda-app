@@ -57,12 +57,15 @@ export default async function BookEventPage({
       <div className="w-full max-w-4xl">
         <Card className="shadow-lg border-gray-200">
           <CardHeader className="border-b bg-gray-50/50">
-            <CardTitle className="text-2xl text-gray-900">
-              Reserva tu cita
-            </CardTitle>
+            <div className="flex items-center gap-2">
+              <CardTitle className="text-2xl text-gray-900">
+                Reserva tu cita
+              </CardTitle>
+              <span className="text-2xl text-gray-900">con</span>
+              <span className="text-2xl font-semibold text-blue-600">{calendarUser.fullName}</span>
+            </div>
             <CardDescription className="text-gray-600 mt-2">
               <div className="font-medium text-blue-600">{event.name}</div>
-              <div className="mt-1">con {calendarUser.fullName}</div>
               {event.description && (
                 <div className="mt-2">{event.description}</div>
               )}

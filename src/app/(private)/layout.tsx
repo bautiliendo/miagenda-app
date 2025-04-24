@@ -1,21 +1,22 @@
 "use client";
 
 import { NavLink } from "@/components/NavLink"
-import { UserButton } from "@clerk/nextjs"
+import { UserButton, useAuth } from "@clerk/nextjs"
 import { ReactNode } from "react"
-import { 
-  Menu, 
-  LayoutDashboard, 
-  Calendar,
-  Users,
-  User,
-  LucideIcon
+import {
+    Menu,
+    LayoutDashboard,
+    Calendar,
+    Users,
+    User,
+    LucideIcon,
+    Home
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
+    Sheet,
+    SheetContent,
+    SheetTrigger,
 } from "@/components/ui/sheet"
 
 interface Route {
@@ -46,6 +47,8 @@ function AccountButton() {
 }
 
 export default function PrivateLayout({ children }: { children: ReactNode }) {
+    const { userId } = useAuth();
+
     const routes: Route[] = [
         {
             label: 'Servicios',
@@ -62,15 +65,27 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
             variant: 'default'
         },
         {
+            label: 'Agenda',
+            icon: Calendar,
+            href: '/agenda',
+            variant: 'ghost'
+        },
+        {
             label: 'Clientes',
             icon: Users,
             href: '#',
             variant: 'ghost'
         },
         {
-            label: 'Agenda',
-            icon: Calendar,
-            href: '/agenda',
+            label: 'Mi página',
+            icon: User,
+            href: userId ? `/book/${userId}` : '#',
+            variant: 'ghost'
+        },
+        {
+            label: 'AgendIA.com',
+            icon: Home,
+            href: '/',
             variant: 'ghost'
         },
         {
@@ -88,7 +103,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
                 <div className="space-y-4 py-4 flex flex-col h-full bg-white border-r">
                     <div className="px-3 py-2 flex-1">
                         <div className="mb-4">
-                            <NavLink href="/" className="flex items-center px-4">
+                            <NavLink href="/events" className="flex items-center px-4">
                                 <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 text-transparent bg-clip-text">
                                     AgendIA
                                 </span>
@@ -120,7 +135,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
                 <div className="flex-1 h-full">
                     <header className="fixed top-0 left-0 w-full bg-white border-b z-50 py-2 md:hidden">
                         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-                            <NavLink href="/" className="md:hidden text-2xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 text-transparent bg-clip-text">
+                            <NavLink href="/events" className="md:hidden text-2xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 text-transparent bg-clip-text">
                                 AgendIA
                             </NavLink>
                             <div className="md:hidden">
@@ -134,7 +149,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
                                         <div className="space-y-4 py-4 flex flex-col h-full">
                                             <div className="px-3 py-2 flex-1">
                                                 <div className="mb-4">
-                                                    <NavLink href="/" className="flex items-center">
+                                                    <NavLink href="/events" className="flex items-center">
                                                         <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 text-transparent bg-clip-text">
                                                             AgendIA
                                                         </span>

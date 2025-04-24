@@ -206,7 +206,7 @@ export default function Navbar() {
                         <div className="flex flex-col gap-3 text-sm text-gray-600">
                             <p className="font-medium text-gray-800">¿Necesitás ayuda?</p>
                             <a href="mailto:contacto@turneroapp.com" className="flex items-center gap-2 hover:text-blue-600">
-                                <span>turneroapp@gmail.com</span>
+                                <span>agendia@gmail.com</span>
                             </a>
                             <a href="tel:+5493512431491" className="flex items-center gap-2 hover:text-blue-600">
                                 <span>+5493512431491</span>
