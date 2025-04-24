@@ -8,6 +8,7 @@ import {
   LayoutDashboard, 
   Calendar,
   Users,
+  User,
   LucideIcon
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -23,6 +24,25 @@ interface Route {
     href: string;
     color?: string;
     variant?: 'default' | 'ghost';
+    isUserButton?: boolean;
+}
+
+function AccountButton() {
+    return (
+        <div className="w-full flex items-center gap-x-2 text-gray-600 text-sm font-[500] pl-6 py-4 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all">
+            <div className="h-5 w-5 -ml-2 mb-1">
+                <UserButton
+                    appearance={{
+                        elements: {
+                            userButtonAvatarBox: "size-5",
+                            userButtonTrigger: "p-0 hover:bg-transparent"
+                        }
+                    }}
+                />
+            </div>
+            <span className="pl-2">Mi cuenta</span>
+        </div>
+    )
 }
 
 export default function PrivateLayout({ children }: { children: ReactNode }) {
@@ -50,15 +70,16 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
         {
             label: 'Agenda',
             icon: Calendar,
-            href: '#',
+            href: '/agenda',
             variant: 'ghost'
         },
-        // {
-        //     label: 'Pagos',
-        //     icon: CreditCard,
-        //     href: '/',
-        //     variant: 'ghost'
-        // },
+        {
+            label: 'Mi cuenta',
+            icon: User,
+            href: '#',
+            variant: 'ghost',
+            isUserButton: true
+        },
     ];
 
     return (
@@ -69,35 +90,28 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
                         <div className="mb-4">
                             <NavLink href="/" className="flex items-center px-4">
                                 <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 text-transparent bg-clip-text">
-                                    Turnero App
+                                    AgendIA
                                 </span>
                             </NavLink>
                         </div>
                         <div className="space-y-1">
                             {routes.map((route) => (
-                                <NavLink
-                                    key={`${route.href}-${route.label}`}
-                                    href={route.href}
-                                    className={cn(
-                                        "w-full flex items-center gap-x-2 text-gray-600 text-sm font-[500] pl-6 py-4 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all",
-                                        route.color
-                                    )}
-                                >
-                                    <route.icon className="h-5 w-5" />
-                                    {route.label}
-                                </NavLink>
+                                route.isUserButton ? (
+                                    <AccountButton key="account" />
+                                ) : (
+                                    <NavLink
+                                        key={`${route.href}-${route.label}`}
+                                        href={route.href}
+                                        className={cn(
+                                            "w-full flex items-center gap-x-2 text-gray-600 text-sm font-[500] pl-6 py-4 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all",
+                                            route.color
+                                        )}
+                                    >
+                                        <route.icon className="h-5 w-5" />
+                                        {route.label}
+                                    </NavLink>
+                                )
                             ))}
-                        </div>
-                    </div>
-                    <div className="px-3 py-2">
-                        <div className="px-4 py-2">
-                            <UserButton
-                                appearance={{ 
-                                    elements: { 
-                                        userButtonAvatarBox: "size-full"
-                                    } 
-                                }}
-                            />
                         </div>
                     </div>
                 </div>
@@ -107,7 +121,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
                     <header className="fixed top-0 left-0 w-full bg-white border-b z-50 py-2 md:hidden">
                         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
                             <NavLink href="/" className="md:hidden text-2xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 text-transparent bg-clip-text">
-                                Turnero App
+                                AgendIA
                             </NavLink>
                             <div className="md:hidden">
                                 <Sheet>
@@ -122,39 +136,32 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
                                                 <div className="mb-4">
                                                     <NavLink href="/" className="flex items-center">
                                                         <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 text-transparent bg-clip-text">
-                                                            Turnero App
+                                                            AgendIA
                                                         </span>
                                                     </NavLink>
                                                 </div>
                                                 <div className="space-y-1">
                                                     {routes.map((route) => (
-                                                        <NavLink
-                                                            key={`${route.href}-${route.label}`}
-                                                            href={route.href}
-                                                            onClick={() => {
-                                                                const closeEvent = new Event('close-sheet');
-                                                                window.dispatchEvent(closeEvent);
-                                                            }}
-                                                            className={cn(
-                                                                "w-full flex items-center gap-x-2 text-gray-600 text-sm font-[500] pl-6 py-4 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all",
-                                                                route.color
-                                                            )}
-                                                        >
-                                                            <route.icon className="h-5 w-5" />
-                                                            {route.label}
-                                                        </NavLink>
+                                                        route.isUserButton ? (
+                                                            <AccountButton key="account" />
+                                                        ) : (
+                                                            <NavLink
+                                                                key={`${route.href}-${route.label}`}
+                                                                href={route.href}
+                                                                onClick={() => {
+                                                                    const closeEvent = new Event('close-sheet');
+                                                                    window.dispatchEvent(closeEvent);
+                                                                }}
+                                                                className={cn(
+                                                                    "w-full flex items-center gap-x-2 text-gray-600 text-sm font-[500] pl-6 py-4 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all",
+                                                                    route.color
+                                                                )}
+                                                            >
+                                                                <route.icon className="h-5 w-5" />
+                                                                {route.label}
+                                                            </NavLink>
+                                                        )
                                                     ))}
-                                                </div>
-                                            </div>
-                                            <div className="px-3 py-2">
-                                                <div className="px-4 py-2">
-                                                    <UserButton
-                                                        appearance={{ 
-                                                            elements: { 
-                                                                userButtonAvatarBox: "size-full"
-                                                            } 
-                                                        }}
-                                                    />
                                                 </div>
                                             </div>
                                         </div>

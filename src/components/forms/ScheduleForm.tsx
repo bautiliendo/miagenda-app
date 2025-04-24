@@ -104,47 +104,57 @@ export function ScheduleForm({
                         </div>
                     </div>
 
-                    <div className="space-y-6">
+                    <div className="space-y-4">
                         {DAYS_OF_WEEK_IN_ORDER.map(dayOfWeek => (
-                            <div key={dayOfWeek} className="bg-white p-4 rounded-lg border">
-                                <div className="flex items-center justify-between mb-4">
-                                    <div className="capitalize font-medium text-gray-900">
-                                        {dayOfWeek}
+                            <div 
+                                key={dayOfWeek} 
+                                className="bg-white border rounded-lg overflow-hidden"
+                            >
+                                <div className="flex flex-col p-3 border-b bg-gray-50">
+                                    <div className="flex items-center justify-between">
+                                        <h3 className="text-base font-medium text-gray-800 capitalize">
+                                            {dayOfWeek}
+                                        </h3>
+                                        <Button
+                                            type="button"
+                                            size="sm"
+                                            variant="outline"
+                                            onClick={() => {
+                                                addAvailability({
+                                                    dayOfWeek,
+                                                    startTime: "09:00",
+                                                    endTime: "17:00",
+                                                })
+                                            }}
+                                            className="h-8 px-3 text-sm text-blue-600 border-blue-200 hover:bg-blue-50"
+                                        >
+                                            <Plus className="size-3.5 mr-1.5" />
+                                            Agregar
+                                        </Button>
                                     </div>
-                                    <Button
-                                        type="button"
-                                        size="sm"
-                                        variant="outline"
-                                        onClick={() => {
-                                            addAvailability({
-                                                dayOfWeek,
-                                                startTime: "09:00",
-                                                endTime: "17:00",
-                                            })
-                                        }}
-                                        className="text-blue-600 border-blue-200 hover:bg-blue-50"
-                                    >
-                                        <Plus className="size-4 mr-2" />
-                                        Agregar Horario
-                                    </Button>
                                 </div>
-                                <div className="space-y-3">
+                                <div className="p-3 space-y-2">
+                                    {groupedAvailabilityFields[dayOfWeek]?.length === 0 && (
+                                        <div className="text-sm text-gray-500 italic text-center py-2">
+                                            No hay horarios disponibles
+                                        </div>
+                                    )}
                                     {groupedAvailabilityFields[dayOfWeek]?.map(
                                         (field, labelIndex) => (
                                             <div
                                                 key={field.id}
-                                                className="flex flex-col gap-2 bg-gray-50/50 p-3 rounded-md"
+                                                className="flex flex-col bg-gray-50 rounded-md overflow-hidden"
                                             >
-                                                <div className="flex gap-3 items-center">
+                                                <div className="flex items-center p-2 gap-2">
                                                     <FormField
                                                         control={form.control}
                                                         name={`availabilities.${field.originalIndex}.startTime`}
                                                         render={({ field }) => (
-                                                            <FormItem>
+                                                            <FormItem className="flex-1">
                                                                 <FormControl>
                                                                     <Input
-                                                                        className="w-24"
-                                                                        placeholder="09:00"
+                                                                        className="h-9 text-center text-sm"
+                                                                        placeholder="Inicio"
                                                                         aria-label={`${dayOfWeek} Hora inicio ${labelIndex + 1}`}
                                                                         {...field}
                                                                     />
@@ -152,16 +162,16 @@ export function ScheduleForm({
                                                             </FormItem>
                                                         )}
                                                     />
-                                                    <span className="text-gray-500">hasta</span>
+                                                    <span className="text-gray-500 text-sm">-</span>
                                                     <FormField
                                                         control={form.control}
                                                         name={`availabilities.${field.originalIndex}.endTime`}
                                                         render={({ field }) => (
-                                                            <FormItem>
+                                                            <FormItem className="flex-1">
                                                                 <FormControl>
                                                                     <Input
-                                                                        className="w-24"
-                                                                        placeholder="17:00"
+                                                                        className="h-9 text-center text-sm"
+                                                                        placeholder="Fin"
                                                                         aria-label={`${dayOfWeek} Hora fin ${labelIndex + 1}`}
                                                                         {...field}
                                                                     />
@@ -172,15 +182,18 @@ export function ScheduleForm({
                                                     <Button
                                                         type="button"
                                                         variant="ghost"
-                                                        className="text-red-500 hover:text-red-600 hover:bg-red-50 ml-auto"
+                                                        size="icon"
+                                                        className="h-9 w-9 text-red-500 hover:text-red-600 hover:bg-red-50"
                                                         onClick={() => removeAvailability(field.originalIndex)}
                                                     >
                                                         <X className="size-4" />
                                                     </Button>
                                                 </div>
                                                 {form.formState.errors.availabilities?.[field.originalIndex]?.message && (
-                                                    <div className="text-red-500 text-sm">
-                                                        {form.formState.errors.availabilities?.[field.originalIndex]?.message}
+                                                    <div className="px-2 pb-2">
+                                                        <div className="text-red-500 text-xs">
+                                                            {form.formState.errors.availabilities?.[field.originalIndex]?.message}
+                                                        </div>
                                                     </div>
                                                 )}
                                             </div>

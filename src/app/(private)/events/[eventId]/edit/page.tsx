@@ -7,16 +7,17 @@ import { notFound } from "next/navigation";
 export const revalidate = 0
 
 export default async function EditEventPage({
-  params: { eventId },
+  params,
 }: {
-  params: { eventId: string }
+  params: Promise<{ eventId: string }>
 }) {
+  const resolvedParams = await params
   const { userId, redirectToSignIn } = await auth()
   if (!userId) return redirectToSignIn()
 
   const event = await db.query.EventTable.findFirst({
     where: ({ id, clerkUserId }, { and, eq }) =>
-      and(eq(clerkUserId, userId), eq(id, eventId)),
+      and(eq(clerkUserId, userId), eq(id, resolvedParams.eventId)),
   })
 
   if (event == null) return notFound()
