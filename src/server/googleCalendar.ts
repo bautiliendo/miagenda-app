@@ -2,13 +2,14 @@ import 'server-only'
 
 import { clerkClient } from "@clerk/nextjs/server"
 import { google } from "googleapis"
-import { addMinutes, endOfDay, startOfDay } from 'date-fns';
+import { addMinutes } from 'date-fns';
 
 export async function getCalendarEventTimes(
   clerkUserId: string,
   { start, end }: { start: Date; end: Date }
 ) {
   const oAuthClient = await getOAuthClient(clerkUserId)
+  if (oAuthClient == null) return []
 
   const events = await google.calendar("v3").events.list({
     calendarId: "primary",
@@ -23,21 +24,17 @@ export async function getCalendarEventTimes(
   return (
     events.data.items
       ?.map(event => {
-        if (event.start?.date != null && event.end?.date != null) {
-          return {
-            start: startOfDay(event.start.date),
-            end: endOfDay(event.end.date),
-          }
-        }
+        if (event.start?.dateTime == null || event.end?.dateTime == null) return null
 
-        if (event.start?.dateTime != null && event.end?.dateTime != null) {
-          return {
-            start: new Date(event.start.dateTime),
-            end: new Date(event.end.dateTime),
-          }
+        return {
+          start: new Date(event.start.dateTime),
+          end: new Date(event.end.dateTime),
+          summary: event.summary,
+          description: event.description,
+          attendees: event.attendees,
         }
       })
-      .filter(date => date != null) || []
+      .filter((event): event is NonNullable<typeof event> => event != null) || []
   )
 }
 
