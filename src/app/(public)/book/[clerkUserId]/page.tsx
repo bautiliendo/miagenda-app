@@ -17,10 +17,12 @@ import { Clock, CalendarPlus } from "lucide-react"
 export const revalidate = 0
 
 export default async function BookingPage({
-  params: { clerkUserId },
+  params,
 }: {
   params: { clerkUserId: string }
 }) {
+  const { clerkUserId } = await params;
+
   const events = await db.query.EventTable.findMany({
     where: ({ clerkUserId: userIdCol, isActive }, { eq, and }) =>
       and(eq(userIdCol, clerkUserId), eq(isActive, true)),
