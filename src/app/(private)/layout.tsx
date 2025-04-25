@@ -2,7 +2,7 @@
 
 import { NavLink } from "@/components/NavLink"
 import { UserButton, useAuth } from "@clerk/nextjs"
-import { ReactNode } from "react"
+import { ReactNode, useState } from "react"
 import {
     Menu,
     LayoutDashboard,
@@ -10,7 +10,10 @@ import {
     Users,
     User,
     LucideIcon,
-    Home
+    CalendarClock,
+    ExternalLink,
+    HelpCircle,
+    Bell
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
@@ -48,50 +51,70 @@ function AccountButton() {
 
 export default function PrivateLayout({ children }: { children: ReactNode }) {
     const { userId } = useAuth();
+    const [isOpen, setIsOpen] = useState(false);
 
     const routes: Route[] = [
         {
-            label: 'Servicios',
+            label: 'Servicios - (add prices)',
             icon: LayoutDashboard,
             href: '/events',
-            color: 'text-blue-600',
+            color: 'text-red-600',
             variant: 'default'
         },
         {
-            label: 'Mi disponibilidad',
-            icon: Calendar,
+            label: 'Mi disponibilidad - (ux - ui)',
+            icon: CalendarClock,
             href: '/schedule',
-            color: 'text-violet-600',
+            color: 'text-red-600',
             variant: 'default'
         },
         {
-            label: 'Agenda',
+            label: 'Agenda - ready for mvp',
             icon: Calendar,
             href: '/agenda',
+            color: 'text-green-700',
             variant: 'ghost'
         },
         {
-            label: 'Clientes',
+            label: 'Clientes - (not implemented)',
             icon: Users,
             href: '#',
+            color: 'text-red-600',
             variant: 'ghost'
         },
         {
-            label: 'Mi página',
+            label: 'Mi página - (add navigation)',
             icon: User,
             href: userId ? `/book/${userId}` : '#',
+            color: 'text-red-600',
             variant: 'ghost'
         },
         {
-            label: 'AgendIA.com',
-            icon: Home,
+            label: 'Notificaciones - (not implemented)',
+            icon: Bell,
+            href: '#',
+            color: 'text-red-600',
+            variant: 'ghost'
+        },
+        {
+            label: 'Volver al sitio - ready',
+            icon: ExternalLink,
             href: '/',
+            color: 'text-green-600',
             variant: 'ghost'
         },
         {
-            label: 'Mi cuenta',
+            label: 'Ayuda - ready for mvp',
+            icon: HelpCircle,
+            href: '/help',  
+            color: 'text-green-700',
+            variant: 'ghost'
+        },
+        {
+            label: 'Mi cuenta - ready',
             icon: User,
             href: '#',
+            color: 'text-green-600',
             variant: 'ghost',
             isUserButton: true
         },
@@ -117,6 +140,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
                                     <NavLink
                                         key={`${route.href}-${route.label}`}
                                         href={route.href}
+                                        onClick={() => setIsOpen(false)}
                                         className={cn(
                                             "w-full flex items-center gap-x-2 text-gray-600 text-sm font-[500] pl-6 py-4 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all",
                                             route.color
@@ -139,7 +163,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
                                 AgendIA
                             </NavLink>
                             <div className="md:hidden">
-                                <Sheet>
+                                <Sheet open={isOpen} onOpenChange={setIsOpen}>
                                     <SheetTrigger asChild>
                                         <button className="cursor-pointer text-blue-600">
                                             <Menu size={30} />
@@ -163,10 +187,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
                                                             <NavLink
                                                                 key={`${route.href}-${route.label}`}
                                                                 href={route.href}
-                                                                onClick={() => {
-                                                                    const closeEvent = new Event('close-sheet');
-                                                                    window.dispatchEvent(closeEvent);
-                                                                }}
+                                                                onClick={() => setIsOpen(false)}
                                                                 className={cn(
                                                                     "w-full flex items-center gap-x-2 text-gray-600 text-sm font-[500] pl-6 py-4 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all",
                                                                     route.color
