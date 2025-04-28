@@ -62,10 +62,10 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
             variant: 'default'
         },
         {
-            label: 'Mi disponibilidad - (ux - ui)',
+            label: 'Mi disponibilidad',
             icon: CalendarClock,
             href: '/schedule',
-            color: 'text-red-600',
+            color: 'text-green-600',
             variant: 'default'
         },
         {

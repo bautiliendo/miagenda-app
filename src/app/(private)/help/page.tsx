@@ -11,6 +11,11 @@ import {
 // Preguntas específicas sobre el uso de la app
 const helpFaqItems = [
   {
+    id: 0,
+    question: "¿Cómo cambio el nombre de mi negocio?",
+    answer:
+      "Ve a la sección 'Mi cuenta' en el menú lateral, presiona 'Manage account' , 'Update profile' y cambia el nombre de tu negocio."
+  },{
     id: 1,
     question: "¿Cómo configuro mi horario de disponibilidad?",
     answer:

@@ -112,7 +112,15 @@ export function ScheduleForm({
                             <div className="p-5 border-b bg-gray-50/50">
                                 <div className="flex items-center justify-between mb-3">
                                     <h3 className="text-lg font-medium text-gray-800 capitalize">
-                                        {dayOfWeek}
+                                        {
+                                            dayOfWeek === "monday" ? "Lunes" :
+                                            dayOfWeek === "tuesday" ? "Martes" :
+                                            dayOfWeek === "wednesday" ? "Miércoles" :
+                                            dayOfWeek === "thursday" ? "Jueves" :
+                                            dayOfWeek === "friday" ? "Viernes" :
+                                            dayOfWeek === "saturday" ? "Sábado" :
+                                            "Domingo"
+                                        }
                                     </h3>
                                     <Button
                                         type="button"
