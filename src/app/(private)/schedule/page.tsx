@@ -17,7 +17,7 @@ export default async function SchedulePage() {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-6">
-            <div className="max-w-3xl mx-auto">
+            <div className="max-w-6xl mx-auto">
                 <div className="mb-8">
                     <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 flex items-center gap-3">
                         <Clock className="size-8 text-blue-600" />

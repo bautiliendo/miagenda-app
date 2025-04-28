@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Outfit } from "next/font/google";
+import { Inter } from "next/font/google";
 import {
   ClerkProvider,
   // SignInButton,
@@ -9,7 +9,7 @@ import {
   // UserButton,
 } from '@clerk/nextjs'
 
-const outfit = Outfit({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: "AgendIA",
@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <ClerkProvider>
 
       <html lang="es">
-        <body className={outfit.className}>{children}</body>
+        <body className={inter.className}>{children}</body>
       </html>
 
     </ClerkProvider>

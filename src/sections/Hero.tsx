@@ -7,8 +7,8 @@ import timeAnimation from '@/../public/animations/time.json'; // Asegurate que e
 
 export default function Hero() {
   return (
-    <section id="hero" className="w-full bg-white py-24 flex items-center min-h-[90vh] scroll-mt-20">
-      <div className="max-w-6xl mx-auto px-4 flex flex-col-reverse md:flex-row items-center justify-between gap-12">
+    <section id="hero" className="w-full bg-white py-12 md:py-24 flex items-center min-h-[90vh] scroll-mt-20">
+      <div className="max-w-6xl mx-auto px-6 md:px-4 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
 
         {/* Texto a la izquierda */}
         <div className="w-full md:w-1/2 text-center md:text-left">

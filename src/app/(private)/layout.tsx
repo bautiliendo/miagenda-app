@@ -55,10 +55,10 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
 
     const routes: Route[] = [
         {
-            label: 'Servicios - (add prices)',
+            label: 'Servicios',
             icon: LayoutDashboard,
             href: '/events',
-            color: 'text-red-600',
+            color: 'text-green-600',
             variant: 'default'
         },
         {
@@ -69,7 +69,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
             variant: 'default'
         },
         {
-            label: 'Agenda - ready for mvp',
+            label: 'Agenda - mvp',
             icon: Calendar,
             href: '/agenda',
             color: 'text-green-700',
@@ -97,14 +97,14 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
             variant: 'ghost'
         },
         {
-            label: 'Volver al sitio - ready',
+            label: 'Volver al sitio',
             icon: ExternalLink,
             href: '/',
             color: 'text-green-600',
             variant: 'ghost'
         },
         {
-            label: 'Ayuda - ready for mvp',
+            label: 'Ayuda - mvp',
             icon: HelpCircle,
             href: '/help',  
             color: 'text-green-700',
