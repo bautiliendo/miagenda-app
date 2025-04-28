@@ -4,6 +4,7 @@ export const eventFormSchema = z.object({
   name: z.string().min(1, "Required"),
   description: z.string().optional(),
   isActive: z.boolean(),  // Quita el .default() para evitar problemas de tipos
+  price: z.coerce.number().min(0, "El precio no puede ser negativo"),
   durationInMinutes: z.coerce
     .number()
     .int()

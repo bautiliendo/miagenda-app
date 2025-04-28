@@ -15,6 +15,12 @@ import { formatEventDescription } from "@/lib/formatters";
 import Link from "next/link";
 import { CopyEventButton } from "@/components/CopyEventButton";
 
+const formatPrice = (value: number) => {
+    return new Intl.NumberFormat('es-AR', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+    }).format(value);
+}
 
 export const revalidate = 0
 
@@ -31,7 +37,7 @@ export default async function Eventspage() {
             <div className="max-w-6xl mx-auto">
                 <div className="flex flex-col mb-8">
                     <div>
-                        <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900">
+                        <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 flex items-center gap-3">
                             Catálogo de Servicios
                         </h1>
                         <p className="mt-2 text-gray-600 text-lg">
@@ -90,6 +96,7 @@ type EventCardProps = {
     description: string | null
     durationInMinutes: number
     clerkUserId: string
+    price: number
 }
 
 function EventCard({
@@ -99,6 +106,7 @@ function EventCard({
     description,
     durationInMinutes,
     clerkUserId,
+    price,
 }: EventCardProps) {
     return (
         <Card className={cn(
@@ -118,6 +126,9 @@ function EventCard({
                     <CalendarRange className="size-4 mr-2" />
                     {formatEventDescription(durationInMinutes)}
                 </CardDescription>
+                <div className="mt-2 text-sm font-medium text-blue-600">
+                    {price === 0 ? "Gratis" : `$${formatPrice(price)}`}
+                </div>
             </CardHeader>
             {description != null && (
                 <CardContent className={cn("flex-grow", !isActive && "opacity-50")}>

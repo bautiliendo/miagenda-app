@@ -32,32 +32,35 @@ import {
 } from "../ui/alert-dialog"
 import { useTransition } from "react"
 
+type FormValues = z.infer<typeof eventFormSchema>
+
+const formatPrice = (value: number) => {
+    return new Intl.NumberFormat('es-AR', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+    }).format(value);
+}
+
 export function EventForm({
     event,
 }: {
-    event?: {
-        id: string
-        name: string
-        description?: string
-        durationInMinutes: number
-        isActive: boolean
-    }
+    event?: FormValues & { id: string }
 }) {
     const [isDeletePending, startDeleteTransition] = useTransition()
 
-    const form = useForm<z.infer<typeof eventFormSchema>>({
+    const form = useForm<FormValues>({
         resolver: zodResolver(eventFormSchema),
-        defaultValues: event ?? {
-            name: "", // Agregar un valor predeterminado explícito
-            isActive: true,
-            durationInMinutes: 30,
-            description: "", // Agregar un valor predeterminado explícito
+        defaultValues: {
+            name: event?.name ?? "",
+            price: event?.price ?? 0,
+            isActive: event?.isActive ?? true,
+            durationInMinutes: event?.durationInMinutes ?? 30,
+            description: event?.description ?? "",
         },
     });
 
-    async function onSubmit(values: z.infer<typeof eventFormSchema>) {
-        const action =
-            event == null ? createEvent : updateEvent.bind(null, event.id)
+    async function onSubmit(values: FormValues) {
+        const action = event == null ? createEvent : updateEvent.bind(null, event.id)
         const data = await action(values)
 
         if (data?.error) {
@@ -141,6 +144,36 @@ export function EventForm({
 
                     <FormField
                         control={form.control}
+                        name="price"
+                        render={({ field }) => (
+                            <FormItem className="bg-gray-50/50 p-4 rounded-lg border">
+                                <FormLabel className="text-gray-700">Precio</FormLabel>
+                                <FormControl>
+                                    <div className="relative">
+                                        <Input 
+                                            type="text" 
+                                            className="bg-white border-gray-200 pl-8 w-32 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
+                                            {...field}
+                                            inputMode="numeric"
+                                            onChange={(e) => {
+                                                const rawValue = e.target.value.replace(/\D/g, '');
+                                                field.onChange(rawValue ? Number(rawValue) : 0);
+                                            }}
+                                            value={field.value ? formatPrice(Number(field.value)) : ''}
+                                        />
+                                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                                    </div>
+                                </FormControl>
+                                <FormDescription className="text-gray-600">
+                                    Precio del servicio (0 para gratis)
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
                         name="isActive"
                         render={({ field }) => (
                             <FormItem className="bg-gray-50/50 p-4 rounded-lg border">
@@ -161,7 +194,7 @@ export function EventForm({
                     />
                 </div>
 
-                <div className="flex gap-3 justify-end pt-4 border-t">
+                <div className="flex flex-col md:flex-row gap-3 md:gap-1 lg:gap-3 justify-end pt-4 border-t">
                     {event && (
                         <AlertDialog>
                             <AlertDialogTrigger asChild>

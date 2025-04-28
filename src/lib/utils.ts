@@ -6,5 +6,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function timeToInt(time: string) {
-  return parseFloat(time.replace(":", "."));
+  const [hours, minutes] = time.split(":").map(Number);
+  return hours * 60 + minutes;
 }

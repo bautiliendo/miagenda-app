@@ -3,7 +3,7 @@ import { timeToInt } from "@/lib/utils"
 import { z } from "zod"
 
 export const scheduleFormSchema = z.object({
-  timezone: z.string().min(1, "Required"),
+  timezone: z.string().min(1, "Obligatorio"),
   availabilities: z
     .array(
       z.object({
@@ -12,13 +12,13 @@ export const scheduleFormSchema = z.object({
           .string()
           .regex(
             /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/,
-            "Time must be in the format HH:MM"
+            "La hora debe estar en formato HH:MM"
           ),
         endTime: z
           .string()
           .regex(
             /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/,
-            "Time must be in the format HH:MM"
+            "La hora debe estar en formato HH:MM"
           ),
       })
     )
@@ -36,7 +36,7 @@ export const scheduleFormSchema = z.object({
         if (overlaps) {
           ctx.addIssue({
             code: "custom",
-            message: "Availability overlaps with another",
+            message: "La disponibilidad se superpone con otra",
             path: [index],
           })
         }
@@ -46,7 +46,7 @@ export const scheduleFormSchema = z.object({
         ) {
           ctx.addIssue({
             code: "custom",
-            message: "End time must be after start time",
+            message: "La hora de fin debe ser posterior a la hora de inicio",
             path: [index],
           })
         }

@@ -1,0 +1,1 @@
+ALTER TABLE "events" ADD COLUMN "price" integer NOT NULL DEFAULT 0; 
