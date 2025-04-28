@@ -13,7 +13,6 @@ import {
     CalendarClock,
     ExternalLink,
     HelpCircle,
-    Bell
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
@@ -76,26 +75,26 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
             variant: 'ghost'
         },
         {
-            label: 'Clientes - (not implemented)',
+            label: 'Clientes',
             icon: Users,
             href: '#',
             color: 'text-red-600',
             variant: 'ghost'
         },
         {
-            label: 'Mi página - (add navigation)',
+            label: 'Mi página',
             icon: User,
             href: userId ? `/book/${userId}` : '#',
             color: 'text-red-600',
             variant: 'ghost'
         },
-        {
-            label: 'Notificaciones - (not implemented)',
-            icon: Bell,
-            href: '#',
-            color: 'text-red-600',
-            variant: 'ghost'
-        },
+        // {
+        //     label: 'Notificaciones - (not implemented)',
+        //     icon: Bell,
+        //     href: '#',
+        //     color: 'text-red-600',
+        //     variant: 'ghost'
+        // },
         {
             label: 'Volver al sitio',
             icon: ExternalLink,

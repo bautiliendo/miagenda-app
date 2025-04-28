@@ -61,47 +61,51 @@ export default async function AgendaPage() {
 
   return (
     <div className="p-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Agenda</h1>
-        <p className="text-gray-600 mt-2">
-          Aquí puedes ver todas tus citas programadas
-        </p>
-      </div>
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-8">
+          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900">
+            Agenda
+          </h1>
+          <p className="mt-2 text-gray-600 text-lg">
+            Aquí puedes ver todas tus citas programadas
+          </p>
+        </div>
 
-      <div className="grid gap-6">
-        {Object.entries(eventsByMonth).map(([month, monthEvents]) => (
-          <div key={month} className="space-y-4">
-            {isCurrentMonth(month) ? (
-              <Collapsible defaultOpen={true}>
-                <CollapsibleTrigger className="flex items-center gap-2 w-full text-xl font-semibold text-gray-800 capitalize hover:text-gray-900">
-                  <ChevronDown className="size-5 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                  {month}
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <div className="grid gap-4 mt-4">
-                    {monthEvents.map((event, index) => (
-                      <EventCard key={index} event={event} />
-                    ))}
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
-            ) : (
-              <Collapsible defaultOpen={false}>
-                <CollapsibleTrigger className="flex items-center gap-2 w-full text-xl font-semibold text-gray-800 capitalize hover:text-gray-900">
-                  <ChevronDown className="size-5 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                  {month}
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <div className="grid gap-4 mt-4">
-                    {monthEvents.map((event, index) => (
-                      <EventCard key={index} event={event} />
-                    ))}
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
-            )}
-          </div>
-        ))}
+        <div className="grid gap-6">
+          {Object.entries(eventsByMonth).map(([month, monthEvents]) => (
+            <div key={month} className="space-y-4">
+              {isCurrentMonth(month) ? (
+                <Collapsible defaultOpen={true}>
+                  <CollapsibleTrigger className="flex items-center gap-2 w-full text-xl font-semibold text-gray-800 capitalize hover:text-gray-900">
+                    <ChevronDown className="size-5 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                    {month}
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="grid gap-4 mt-4">
+                      {monthEvents.map((event, index) => (
+                        <EventCard key={index} event={event} />
+                      ))}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              ) : (
+                <Collapsible defaultOpen={false}>
+                  <CollapsibleTrigger className="flex items-center gap-2 w-full text-xl font-semibold text-gray-800 capitalize hover:text-gray-900">
+                    <ChevronDown className="size-5 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                    {month}
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="grid gap-4 mt-4">
+                      {monthEvents.map((event, index) => (
+                        <EventCard key={index} event={event} />
+                      ))}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

@@ -2,7 +2,6 @@ import { ScheduleForm } from "@/components/forms/ScheduleForm";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { db } from "@/drizzle/db";
 import { auth } from "@clerk/nextjs/server";
-import { Clock } from "lucide-react";
 
 export const revalidate = 0
 
@@ -20,7 +19,6 @@ export default async function SchedulePage() {
             <div className="max-w-6xl mx-auto">
                 <div className="mb-8">
                     <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 flex items-center gap-3">
-                        <Clock className="size-8 text-blue-600" />
                         Mi Disponibilidad
                     </h1>
                     <p className="mt-2 text-gray-600 text-lg">
