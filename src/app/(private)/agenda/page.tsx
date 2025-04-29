@@ -32,11 +32,11 @@ export default async function AgendaPage() {
   if (userId == null) return null
 
   const today = new Date()
-  const startOfCurrentMonth = new Date(today.getFullYear(), today.getMonth(), 1)
+  const startOfCurrentDay = new Date(today.getFullYear(), today.getMonth(), today.getDate())
   const endOfNextMonth = new Date(today.getFullYear(), today.getMonth() + 2, 0)
 
   const events = await getCalendarEventTimes(userId, {
-    start: startOfCurrentMonth,
+    start: startOfCurrentDay,
     end: endOfNextMonth,
   })
 

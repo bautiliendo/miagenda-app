@@ -12,7 +12,7 @@ import { formatEventDescription } from "@/lib/formatters"
 import { clerkClient } from "@clerk/nextjs/server"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { Clock, CalendarPlus, CalendarCheck, Star, MapPin, Phone, Mail } from "lucide-react"
+import { Clock, CalendarPlus, CalendarCheck, Star, MapPin, Phone, Mail, DollarSign } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 
 export const revalidate = 0
@@ -124,6 +124,7 @@ export default async function BookingPage({
 
 type EventCardProps = {
   id: string
+  price: number
   name: string
   clerkUserId: string
   description: string | null
@@ -133,6 +134,7 @@ type EventCardProps = {
 function EventCard({
   id,
   name,
+  price,
   description,
   clerkUserId,
   durationInMinutes,
@@ -146,7 +148,10 @@ function EventCard({
             {formatEventDescription(durationInMinutes)}
           </Badge>
         </div>
-        <CardDescription className="flex items-center gap-2 text-gray-600 mt-2">
+        <CardDescription className="flex items-center gap-2 mt-2 font-bold text-black">
+          <DollarSign className="size-4" />
+          <span>{price > 0 ? `${price.toLocaleString('es-ES')}` : ''}</span>
+        </CardDescription><CardDescription className="flex items-center gap-2 text-gray-600 mt-2">
           <Clock className="size-4" />
           <span>Reserva instantánea</span>
         </CardDescription>
@@ -157,7 +162,7 @@ function EventCard({
         </CardContent>
       )}
       <CardFooter className="pt-4 border-t bg-gray-50/50">
-        <Button 
+        <Button
           asChild
           className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg transition-all"
         >
