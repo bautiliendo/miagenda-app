@@ -89,12 +89,9 @@ export async function createCalendarEvent({
 }
 
 async function getOAuthClient(clerkUserId: string) {
-  const token = await (await clerkClient()).users.getUserOauthAccessToken(
-    clerkUserId,
-    "oauth_google"
-  )
+  const response = await (await clerkClient()).users.getUserOauthAccessToken(clerkUserId, "google")
 
-  if (token.data.length === 0 || token.data[0].token == null) {
+  if (response.data.length === 0 || response.data[0].token == null) {
     return
   }
 
@@ -104,7 +101,7 @@ async function getOAuthClient(clerkUserId: string) {
     process.env.GOOGLE_OAUTH_REDIRECT_URI
   )
 
-  client.setCredentials({ access_token: token.data[0].token })
+  client.setCredentials({ access_token: response.data[0].token })
 
   return client
 }
