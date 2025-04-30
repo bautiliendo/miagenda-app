@@ -13,13 +13,17 @@ import { CheckCircle } from "lucide-react"
 
 export const revalidate = 0
 
-export default async function SuccessPage({
-    params,
-    searchParams,
-}: {
-    params: { clerkUserId: string; eventId: string }
-    searchParams: { startTime: string }
-}) {
+interface PageProps {
+    params: Promise<{
+        clerkUserId: string
+        eventId: string
+    }>
+    searchParams: Promise<{
+        startTime: string
+    }>
+}
+
+export default async function SuccessPage({ params, searchParams }: PageProps) {
     const { clerkUserId, eventId } = await params
     const { startTime } = await searchParams
 
