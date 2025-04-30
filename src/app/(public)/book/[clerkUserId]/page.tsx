@@ -17,12 +17,14 @@ import { Badge } from "@/components/ui/badge"
 
 export const revalidate = 0
 
-export default async function BookingPage({
-  params,
-}: {
-  params: { clerkUserId: string }
-}) {
-  const { clerkUserId } = await params;
+interface PageProps {
+  params: Promise<{
+    clerkUserId: string
+  }>
+}
+
+export default async function BookingPage({ params }: PageProps) {
+  const { clerkUserId } = await params
 
   const events = await db.query.EventTable.findMany({
     where: ({ clerkUserId: userIdCol, isActive }, { eq, and }) =>
