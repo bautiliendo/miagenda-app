@@ -22,11 +22,14 @@ import { notFound } from "next/navigation"
 
 export const revalidate = 0
 
-export default async function BookEventPage({
-  params,
-}: {
-  params: { clerkUserId: string; eventId: string }
-}) {
+interface PageProps {
+  params: Promise<{
+    clerkUserId: string
+    eventId: string
+  }>
+}
+
+export default async function BookEventPage({ params }: PageProps) {
   const { clerkUserId, eventId } = await params
 
   const event = await db.query.EventTable.findFirst({
