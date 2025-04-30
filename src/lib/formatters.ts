@@ -30,8 +30,15 @@ const timeFormatter = new Intl.DateTimeFormat(undefined, {
   timeStyle: "short",
 });
 
-export function formatTimeString(date: Date) {
-  return timeFormatter.format(date);
+export function formatTimeString(date: Date, timeZone?: string) {
+  if (timeZone) {
+    return new Intl.DateTimeFormat(undefined, {
+      timeStyle: "short",
+      timeZone: timeZone,
+    }).format(date);
+  } else {
+    return timeFormatter.format(date);
+  }
 }
 
 const dateTimeFormatter = new Intl.DateTimeFormat(undefined, {
