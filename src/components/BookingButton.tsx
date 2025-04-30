@@ -1,6 +1,7 @@
 "use client"
 
-import { Button, ButtonProps } from "./ui/button"
+import { Button } from "./ui/button"
+import type { ComponentProps } from "react"
 import { CalendarDays } from "lucide-react"
 import Link from "next/link"
 
@@ -8,7 +9,7 @@ export function BookingButton({
     eventId,
     clerkUserId,
     ...buttonProps
-}: Omit<ButtonProps, "children"> & {
+}: Omit<ComponentProps<typeof Button>, "children"> & {
     eventId: string
     clerkUserId: string
 }) {
