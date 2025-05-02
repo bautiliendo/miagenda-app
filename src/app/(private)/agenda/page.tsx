@@ -70,6 +70,14 @@ export default async function AgendaPage() {
             Aquí puedes ver todas tus citas programadas
           </p>
         </div>
+        <div className="grid gap-6">
+          {events.length === 0 && (
+            <p className="text-gray-500">No hay turnos programados.</p>
+          )}
+          {events.map((event) => (
+            <EventCard key={event.start.getTime()} event={event} />
+          ))}
+        </div>
 
         <div className="grid gap-6">
           {Object.entries(eventsByMonth).map(([month, monthEvents]) => (

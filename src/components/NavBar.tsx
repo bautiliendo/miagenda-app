@@ -111,9 +111,9 @@ export default function Navbar() {
                             <Menu size={30} />
                         </button>
                     </SheetTrigger>
-                    <SheetContent side="left" className="w-72 p-0">
+                    <SheetContent side="left" className="w-72 p-0 [&>button]:hidden">
                         <div className="flex flex-col h-full">
-                            <div className="px-3 py-2">
+                            <div className="px-3 py-6">
                                 <div className="mb-4">
                                     <Link href="/" className="flex items-center">
                                         <span className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-transparent bg-clip-text">

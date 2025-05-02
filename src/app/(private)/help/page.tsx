@@ -1,5 +1,4 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import FAQ from "@/sections/Faq";
 import { Play } from "lucide-react";
 import {
   Accordion,
@@ -43,12 +42,15 @@ const helpFaqItems = [
 
 export default function HelpPage() {
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Centro de Ayuda</h1>
-        <p className="text-gray-600 mt-2">
-          Aprende a utilizar todas las funciones de AgendIA para sacar el máximo provecho
-        </p>
+    <div className="p-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-8">
+          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900">
+            Centro de ayuda
+          </h1>
+          <p className="mt-2 text-gray-600 text-lg">
+            Aprende a utilizar todas las funciones de AgendIA para sacar el máximo provecho
+          </p>
       </div>
 
       <div className="grid gap-8 md:grid-cols-2 mb-16">
@@ -112,11 +114,29 @@ export default function HelpPage() {
         </div>
       </div>
 
-      {/* Original FAQ from marketing page */}
-      <div className="mt-20">
-        <h2 className="text-2xl font-bold mb-6 text-gray-900">Información general</h2>
-        <FAQ />
+      {/* Contact Section */}
+      <div className="mt-20 text-center">
+        <h2 className="text-2xl font-bold mb-4 text-gray-900">¿No encontraste lo que buscabas?</h2>
+        <p className="text-lg text-gray-600 mb-6">Contáctanos y te damos una mano.</p>
+        <div className="flex justify-center gap-4">
+          <a
+            href="mailto:agendia@gmail.com" // Replace with your actual support email
+            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+          >
+            Enviar Email
+          </a>
+          <a
+            href="https://wa.me/5493512431491" // Replace with your actual WhatsApp number e.g., https://wa.me/5491112345678
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+          >
+            Contactar por WhatsApp
+          </a>
+        </div>
       </div>
+
+    </div>
     </div>
   );
 }

@@ -13,6 +13,7 @@ import {
     CalendarClock,
     ExternalLink,
     HelpCircle,
+    Bell,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
@@ -57,63 +58,62 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
             label: 'Servicios',
             icon: LayoutDashboard,
             href: '/events',
-            color: 'text-green-600',
+
             variant: 'default'
         },
         {
             label: 'Mi disponibilidad',
             icon: CalendarClock,
             href: '/schedule',
-            color: 'text-green-600',
+            
             variant: 'default'
         },
         {
             label: 'Agenda - mvp',
             icon: Calendar,
             href: '/agenda',
-            color: 'text-green-700',
+
             variant: 'ghost'
         },
         {
-            label: 'Clientes',
+            label: 'Clientes - mvp',
             icon: Users,
-            href: '#',
-            color: 'text-red-600',
+            href: '/clients',
+
             variant: 'ghost'
         },
         {
-            label: 'Mi página',
+            label: 'Mi página - mvp',
             icon: User,
             href: userId ? `/book/${userId}` : '#',
-            color: 'text-red-600',
+
             variant: 'ghost'
         },
-        // {
-        //     label: 'Notificaciones - (not implemented)',
-        //     icon: Bell,
-        //     href: '#',
-        //     color: 'text-red-600',
-        //     variant: 'ghost'
-        // },
+        {
+            label: 'Notificaciones - mvp',
+            icon: Bell,
+            href: '/notifications',
+
+            variant: 'ghost'
+        },
         {
             label: 'Volver al sitio',
             icon: ExternalLink,
             href: '/',
-            color: 'text-green-600',
+
             variant: 'ghost'
         },
         {
             label: 'Ayuda - mvp',
             icon: HelpCircle,
             href: '/help',  
-            color: 'text-green-700',
+
             variant: 'ghost'
         },
         {
             label: 'Mi cuenta - ready',
             icon: User,
             href: '#',
-            color: 'text-green-600',
             variant: 'ghost',
             isUserButton: true
         },
@@ -142,7 +142,6 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
                                         onClick={() => setIsOpen(false)}
                                         className={cn(
                                             "w-full flex items-center gap-x-2 text-gray-600 text-sm font-[500] pl-6 py-4 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all",
-                                            route.color
                                         )}
                                     >
                                         <route.icon className="h-5 w-5" />

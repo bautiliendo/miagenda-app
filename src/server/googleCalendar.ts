@@ -74,7 +74,7 @@ export async function createCalendarEvent({
           responseStatus: "accepted",
         },
       ],
-      description: guestNotes ? `Additional Details: ${guestNotes}` : undefined,
+      description: guestNotes ? `Detalles adicionales: ${guestNotes}` : undefined,
       start: {
         dateTime: startTime.toISOString(),
       },
