@@ -2,8 +2,11 @@
 
 import React from 'react'
 import { Button } from '@/components/ui/button';
+// import dynamic from 'next/dynamic';
 import Lottie from 'lottie-react';
 import timeAnimation from '@/../public/animations/time.json'; // Asegurate que este path coincida
+
+// const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 
 export default function Hero() {
   return (

@@ -1,4 +1,4 @@
-import Hero from "@/sections/Hero";
+import HeroClientWrapper from '@/components/HeroClientWrapper';
 import Features from "@/sections/Features";
 import Pricing from "@/sections/Pricing";
 import Footer from "@/sections/Footer";
@@ -12,7 +12,7 @@ export default async function Home() {
     <>
       <NavbarClientWrapper />
       <main>
-        <Hero />
+        <HeroClientWrapper />
         <Features />
         <FAQ />
         <Pricing />
