@@ -49,11 +49,9 @@ export default async function BookingPage({ params }: PageProps) {
             <div className="flex items-center justify-center gap-4">
               <div className="size-16 md:size-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border-2 border-gray-200">
                 {/* //TODO: Logo placeholder - replace with actual logo */}
-                <Link href="/events">
-                  <svg className="size-10 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
-                  </svg>
-                </Link>
+                <svg className="size-10 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
+                </svg>
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
                 {fullName}
