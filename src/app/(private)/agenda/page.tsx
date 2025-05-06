@@ -66,20 +66,18 @@ export default async function AgendaPage() {
           <h1 className="text-3xl lg:text-4xl font-bold text-gray-900">
             Agenda
           </h1>
-          <p className="mt-2 text-gray-600 text-lg">
+          <p className="mt-2 text-gray-600 text-lg"> 
             Aquí puedes ver todas tus citas programadas
           </p>
         </div>
-        <div className="grid gap-6">
-          {events.length === 0 && (
-            <p className="text-gray-500">No hay turnos programados.</p>
-          )}
-          {events.map((event) => (
-            <EventCard key={event.start.getTime()} event={event} />
-          ))}
-        </div>
 
         <div className="grid gap-6">
+          {Object.entries(eventsByMonth).length === 0 && events.length > 0 && (
+            <p className="text-gray-500">Procesando eventos...</p>
+          )}
+          {Object.entries(eventsByMonth).length === 0 && events.length === 0 && (
+            <p className="text-gray-500">No hay turnos programados.</p>
+          )}
           {Object.entries(eventsByMonth).map(([month, monthEvents]) => (
             <div key={month} className="space-y-4">
               {isCurrentMonth(month) ? (

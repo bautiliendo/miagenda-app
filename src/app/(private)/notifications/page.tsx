@@ -62,7 +62,7 @@ export default function NotificationsPage() {
               </div>
 
               <div className="flex items-center justify-between space-x-4 p-4 border rounded-lg">
-                <div className="flex items-center space-x-3">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                   <MessageCircle className="size-5 text-green-600" />
                   <Label htmlFor="whatsapp-notifications" className="text-base font-medium">
                     Notificaciones por WhatsApp

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, ChevronDown, ExternalLink } from "lucide-react";
+import { Menu, ChevronDown, ExternalLink, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     NavigationMenu,
@@ -11,13 +11,15 @@ import {
     NavigationMenuTrigger,
     NavigationMenuContent,
 } from "@/components/ui/navigation-menu";
-import { SignInButton, SignOutButton, SignUpButton, UserButton, useAuth } from "@clerk/nextjs";
+import { SignInButton, SignOutButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export default function Navbar() {
-    const { isSignedIn } = useAuth();
     const [openSoluciones, setOpenSoluciones] = useState(false);
     const [openFaq, setOpenFaq] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
     return (
         <header className="fixed top-0 left-0 w-full bg-white border-b z-50 py-2">
@@ -65,20 +67,19 @@ export default function Navbar() {
                         </NavigationMenuItem>
 
                         <NavigationMenuItem>
-                            {!isSignedIn && (
+                            <SignedIn>
                                 <a href="#pricing" className="text-xl font-medium text-gray-700 hover:text-black transition-colors">
                                     Precios
-                                </a>
-                            )}
 
-                            {isSignedIn && (
+                                </a>
                                 <Link href="/events" className="text-xl font-medium text-gray-700 hover:text-black transition-colors mx-2 ">
                                     Mi Negocio
                                 </Link>
-                            )}
+                            </SignedIn>
+
                         </NavigationMenuItem>
 
-                        {!isSignedIn && (
+                        <SignedOut>
                             <NavigationMenuItem>
                                 <Button
                                     asChild
@@ -99,15 +100,17 @@ export default function Navbar() {
                                     </SignUpButton>
                                 </Button>
                             </NavigationMenuItem>
-                        )}
-                        {isSignedIn && <UserButton />}
+                        </SignedOut>
+                        <SignedIn>
+                            <UserButton />
+                        </SignedIn>
                     </NavigationMenuList>
                 </NavigationMenu>
 
                 {/* Mobile menu */}
-                <Sheet>
+                <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                     <SheetTrigger asChild>
-                        <button className="cursor-pointer lg:hidden text-blue-600">
+                        <button className="cursor-pointer lg:hidden text-blue-600" onClick={() => setIsMobileMenuOpen(true)}>
                             <Menu size={30} />
                         </button>
                     </SheetTrigger>
@@ -115,7 +118,7 @@ export default function Navbar() {
                         <div className="flex flex-col h-full">
                             <div className="px-3 py-6">
                                 <div className="mb-4">
-                                    <Link href="/" className="flex items-center">
+                                    <Link href="/" className="flex items-center" onClick={closeMobileMenu}>
                                         <span className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-transparent bg-clip-text">
                                             AgendIA
                                         </span>
@@ -132,12 +135,12 @@ export default function Navbar() {
                                         </button>
                                         {openSoluciones && (
                                             <div className="ml-4 mt-2 flex flex-col gap-1">
-                                                <a className="hover:text-blue-600">Profesionales independientes</a>
-                                                <a className="hover:text-blue-600">Peluquerías</a>
-                                                <a className="hover:text-blue-600">Barberías</a>
-                                                <a className="hover:text-blue-600">Salones de belleza</a>
-                                                <a className="hover:text-blue-600">Spa y estética</a>
-                                                <a className="hover:text-blue-600">Otros rubros con sistema de turnos</a>
+                                                <a className="hover:text-blue-600 " >Profesionales independientes</a>
+                                                <a className="hover:text-blue-600" >Peluquerías</a>
+                                                <a className="hover:text-blue-600" >Barberías</a>
+                                                <a className="hover:text-blue-600" >Salones de belleza</a>
+                                                <a className="hover:text-blue-600" >Spa y estética</a>
+                                                <a className="hover:text-blue-600" >Otros rubros con sistema de turnos</a>
                                             </div>
                                         )}
                                     </div>
@@ -152,34 +155,32 @@ export default function Navbar() {
                                         </button>
                                         {openFaq && (
                                             <div className="ml-4 mt-2 flex flex-col gap-1">
-                                                <a href="#faq" className="hover:text-blue-600">¿Cuánto cuesta usar AgendIA?</a>
-                                                <a href="#faq" className="hover:text-blue-600">¿Cómo gestiono mis turnos?</a>
-                                                <a href="#faq" className="hover:text-blue-600">¿Pueden mis clientes agendarse solos?</a>
-                                                <a href="#faq" className="hover:text-blue-600">¿Necesito conocimientos técnicos para usarla?</a>
-                                                <a href="#faq" className="hover:text-blue-600">¿Funciona desde el celular?</a>
+                                                <a href="#faq" className="hover:text-blue-600" onClick={closeMobileMenu}>¿Cuánto cuesta usar AgendIA?</a>
+                                                <a href="#faq" className="hover:text-blue-600" onClick={closeMobileMenu}>¿Cómo gestiono mis turnos?</a>
+                                                <a href="#faq" className="hover:text-blue-600" onClick={closeMobileMenu}>¿Pueden mis clientes agendarse solos?</a>
+                                                <a href="#faq" className="hover:text-blue-600" onClick={closeMobileMenu}>¿Necesito conocimientos técnicos para usarla?</a>
+                                                <a href="#faq" className="hover:text-blue-600" onClick={closeMobileMenu}>¿Funciona desde el celular?</a>
                                             </div>
                                         )}
                                     </div>
 
-                                    {!isSignedIn && (
-                                        <a href="#pricing" className="text-base font-medium text-gray-700 hover:text-black transition-colors block py-4">
-                                            Precios
-                                        </a>
-                                    )}
-
-                                    {isSignedIn && (
-                                        <Link href="/events" className="text-base font-medium text-gray-700 hover:text-black transition-colors  py-4 flex items-center gap-2">
+                                    <a href="#pricing" className="text-base font-medium text-gray-700 hover:text-black transition-colors block py-4" onClick={closeMobileMenu}>
+                                        Precios
+                                    </a>
+                                    <SignedIn>
+                                        <Link href="/events" className="text-base font-medium text-gray-700 hover:text-black transition-colors  py-4 flex items-center gap-2" onClick={closeMobileMenu}>
                                             Mi Negocio
                                             <ExternalLink className="h-4 w-4" />
                                         </Link>
-                                    )}
+                                    </SignedIn>
 
-                                    {!isSignedIn && (
+                                    <SignedOut>
                                         <div className="flex flex-col gap-2 mt-4">
                                             <Button
                                                 asChild
                                                 variant="outline"
                                                 className="cursor-pointer border-blue-600 text-blue-600 hover:bg-blue-50 text-xl"
+                                                onClick={closeMobileMenu}
                                             >
                                                 <SignInButton mode="modal">
                                                     <span>Iniciar Sesión</span>
@@ -189,28 +190,26 @@ export default function Navbar() {
                                                 asChild
                                                 variant="outline"
                                                 className="cursor-pointer border-blue-600 text-blue-600 hover:bg-blue-50 text-xl"
+                                                onClick={closeMobileMenu}
                                             >
                                                 <SignUpButton mode="modal">
                                                     <span>Registrarse</span>
                                                 </SignUpButton>
                                             </Button>
                                         </div>
-                                    )}
+                                    </SignedOut>
                                 </div>
                             </div>
 
                             {/* Footer with account section */}
                             <div className="mt-auto px-3 py-4 border-t border-gray-200">
-                                {isSignedIn && (
+                                <SignedIn>
                                     <div className="mb-4">
                                         <div className="w-full flex items-center gap-x-2 text-gray-600 text-sm font-[500] pl-6 py-4 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all">
                                             <div className="h-5 w-5 -ml-2 mb-1">
                                                 <UserButton
                                                     appearance={{
-                                                        elements: {
-                                                            userButtonAvatarBox: "size-5",
-                                                            userButtonTrigger: "p-0 hover:bg-transparent"
-                                                        }
+                                                        elements: { userButtonPopoverCard: { pointerEvents: "initial" } },
                                                     }}
                                                 />
                                             </div>
@@ -220,20 +219,24 @@ export default function Navbar() {
                                             variant="outline"
                                             className="w-full border-blue-600 text-blue-600 hover:bg-blue-50"
                                             asChild
+                                            onClick={closeMobileMenu}
                                         >
                                             <SignOutButton>
                                                 <span>Cerrar sesión</span>
                                             </SignOutButton>
                                         </Button>
                                     </div>
-                                )}
+                                </SignedIn>
+
 
                                 <div className="flex flex-col gap-3 text-sm text-gray-600">
                                     <p className="font-medium text-gray-800">¿Necesitás ayuda?</p>
-                                    <a href="mailto:contacto@turneroapp.com" className="flex items-center gap-2 hover:text-blue-600">
+                                    <a href="mailto:agendia@gmail.com" className="flex items-center gap-2 hover:text-blue-600">
+                                        <Mail className="h-4 w-4" />
                                         <span>agendia@gmail.com</span>
                                     </a>
                                     <a href="tel:+5493512431491" className="flex items-center gap-2 hover:text-blue-600">
+                                        <Phone className="h-4 w-4" />
                                         <span>+5493512431491</span>
                                     </a>
                                     <div className="text-xs mt-2">
