@@ -218,9 +218,9 @@ function EventCard({
 export const revalidate = 0;
 
 interface PageProps {
-  params: {
+  params: Promise<{
     clerkUserId: string;
-  };
+  }>;
 }
 
 export default async function MyPagePreview({ params }: PageProps) {
