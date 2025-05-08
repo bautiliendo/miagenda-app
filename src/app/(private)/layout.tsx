@@ -14,6 +14,7 @@ import {
     ExternalLink,
     HelpCircle,
     Bell,
+    Settings,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
@@ -39,12 +40,14 @@ function AccountButton() {
                     appearance={{
                         elements: {
                             userButtonAvatarBox: "size-5",
-                            userButtonTrigger: "p-0 hover:bg-transparent"
+                            userButtonTrigger: "p-0 hover:bg-transparent",
+                            userButtonPopoverCard: { pointerEvents: "initial" }
                         }
+                        
                     }}
                 />
             </div>
-            <span className="pl-2">Mi cuenta</span>
+            <span className="pl-2 pt-1">Mi cuenta</span>
         </div>
     )
 }
@@ -65,35 +68,42 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
             label: 'Mi disponibilidad',
             icon: CalendarClock,
             href: '/schedule',
-            
+
             variant: 'default'
         },
         {
-            label: 'Agenda - mvp',
+            label: 'Agenda',
             icon: Calendar,
             href: '/agenda',
-
+            color: 'text-red-600',
             variant: 'ghost'
         },
         {
-            label: 'Clientes - mvp',
+            label: 'Clientes',
             icon: Users,
             href: '/clients',
-
+            color: 'text-red-600',
             variant: 'ghost'
         },
         {
-            label: 'Mi página - mvp',
+            label: 'Configurar mi página',
+            icon: Settings,
+            href: userId ? `/my-page/${userId}` : '#',
+            color: 'text-red-600',
+            variant: 'ghost'
+        },
+         {
+            label: 'Mi página (comentar)',
             icon: User,
             href: userId ? `/book/${userId}` : '#',
-
+            color: 'text-red-600',
             variant: 'ghost'
         },
         {
-            label: 'Notificaciones - mvp',
+            label: 'Notificaciones',
             icon: Bell,
             href: '/notifications',
-
+            color: 'text-red-600',
             variant: 'ghost'
         },
         {
@@ -104,14 +114,14 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
             variant: 'ghost'
         },
         {
-            label: 'Ayuda - mvp',
+            label: 'Ayuda',
             icon: HelpCircle,
-            href: '/help',  
-
+            href: '/help',
+            color: 'text-red-600',
             variant: 'ghost'
         },
         {
-            label: 'Mi cuenta - ready',
+            label: 'Mi cuenta',
             icon: User,
             href: '#',
             variant: 'ghost',
@@ -142,6 +152,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
                                         onClick={() => setIsOpen(false)}
                                         className={cn(
                                             "w-full flex items-center gap-x-2 text-gray-600 text-sm font-[500] pl-6 py-4 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all",
+                                            route.color
                                         )}
                                     >
                                         <route.icon className="h-5 w-5" />
