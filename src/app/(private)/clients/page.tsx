@@ -1,7 +1,8 @@
 import { getCalendarEventTimes } from "@/server/googleCalendar"
 import { auth } from "@clerk/nextjs/server"
-import { format } from "date-fns"
+// import { format } from "date-fns"
 import { es } from "date-fns/locale"
+import { formatInTimeZone } from 'date-fns-tz'
 import { Clock, User, Pencil, Phone } from "lucide-react"
 import {
   Card,
@@ -20,6 +21,8 @@ interface CalendarEvent {
   description?: string | null
   attendees?: calendar_v3.Schema$EventAttendee[]
 }
+
+const displayTimezone = "America/Cordoba"
 
 export default async function ClientsPage() {
   const { userId } = await auth()
@@ -110,7 +113,7 @@ function ClientCard({
             <div key={idx} className="flex items-center gap-2 text-gray-700 border-b pb-2 last:border-b-0 last:pb-0">
               <Clock className="size-4 text-gray-400" />
               <span>
-                {format(event.start, "d MMMM yyyy, HH:mm", { locale: es })} - {format(event.end, "HH:mm")}
+                {formatInTimeZone(event.start, displayTimezone, "d MMMM yyyy, HH:mm", { locale: es })} - {formatInTimeZone(event.end, displayTimezone, "HH:mm", { locale: es })}
               </span>
               {event.description && (
                 <span className="ml-2 text-xs text-gray-500">({event.description})</span>
