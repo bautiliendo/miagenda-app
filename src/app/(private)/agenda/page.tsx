@@ -1,6 +1,6 @@
 import { getCalendarEventTimes } from "@/server/googleCalendar"
 import { auth } from "@clerk/nextjs/server"
-import { format } from "date-fns"
+// import { format } from "date-fns"
 import { es } from "date-fns/locale"
 import { Clock, User, ChevronDown, Pencil, Trash2, Phone } from "lucide-react"
 import {
@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/collapsible"
 import { Button } from "@/components/ui/button"
 import { calendar_v3 } from "googleapis"
+import { formatInTimeZone } from "date-fns-tz"
 
 interface CalendarEvent {
   start: Date
@@ -25,6 +26,8 @@ interface CalendarEvent {
   description?: string | null
   attendees?: calendar_v3.Schema$EventAttendee[]
 }
+
+const displayTimezone = "America/Cordoba"; // Define target timezone
 
 export default async function AgendaPage() {
   const { userId } = await auth()
@@ -45,7 +48,7 @@ export default async function AgendaPage() {
 
   // Agrupar eventos por mes
   const eventsByMonth = sortedEvents.reduce((acc, event) => {
-    const monthKey = format(event.start, "MMMM yyyy", { locale: es })
+    const monthKey = formatInTimeZone(event.start, displayTimezone, "MMMM yyyy", { locale: es })
     if (!acc[monthKey]) {
       acc[monthKey] = []
     }
@@ -55,7 +58,7 @@ export default async function AgendaPage() {
 
   // Determinar si un mes es el mes actual
   const isCurrentMonth = (monthKey: string) => {
-    const currentMonthKey = format(today, "MMMM yyyy", { locale: es })
+    const currentMonthKey = formatInTimeZone(today, displayTimezone, "MMMM yyyy", { locale: es })
     return monthKey === currentMonthKey
   }
 
@@ -66,7 +69,7 @@ export default async function AgendaPage() {
           <h1 className="text-3xl lg:text-4xl font-bold text-gray-900">
             Agenda
           </h1>
-          <p className="mt-2 text-gray-600 text-lg"> 
+          <p className="mt-2 text-gray-600 text-lg">
             Aquí puedes ver todas tus citas programadas
           </p>
         </div>
@@ -119,9 +122,9 @@ export default async function AgendaPage() {
 
 function EventCard({ event }: { event: CalendarEvent }) {
   const clientName = event.summary?.split(" + ")[0] || "Cliente"
-  const dayFormatted = format(event.start, "d", { locale: es })
-  const monthFormatted = format(event.start, "MMMM", { locale: es })
-  const dayOfWeekFormatted = format(event.start, "EEEE", { locale: es })
+  const dayFormatted = formatInTimeZone(event.start, displayTimezone, "d", { locale: es })
+  const monthFormatted = formatInTimeZone(event.start, displayTimezone, "MMMM", { locale: es })
+  const dayOfWeekFormatted = formatInTimeZone(event.start, displayTimezone, "EEEE", { locale: es })
 
   return (
     <Card className="max-w-3xl hover:shadow-md transition-shadow">
@@ -138,7 +141,9 @@ function EventCard({ event }: { event: CalendarEvent }) {
               </CardTitle>
               <CardDescription className="flex items-center gap-2 mt-1">
                 <Clock className="size-3.5 text-gray-500" />
-                <span>{format(event.start, "HH:mm")} - {format(event.end, "HH:mm")}</span>
+                <span>
+                  {formatInTimeZone(event.start, displayTimezone, "HH:mm", { locale: es })} - {formatInTimeZone(event.end, displayTimezone, "HH:mm", { locale: es })}
+                </span>
               </CardDescription>
             </div>
           </div>
