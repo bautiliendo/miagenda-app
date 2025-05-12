@@ -31,16 +31,18 @@ export interface PublicProfileViewProps {
     user: UserData;
     events: EventData[];
     clerkUserId: string;
+    isOwner?: boolean;
+    copyButton?: React.ReactNode;
 }
 
 
-export default function InternalPublicProfileView({ user, events }: PublicProfileViewProps) {
+export default function InternalPublicProfileView({ user, events, isOwner, copyButton }: PublicProfileViewProps) {
     const { fullName, primaryEmailAddress, primaryPhoneNumber, imageUrl, publicMetadata } = user;
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                <div className="text-center mb-12">
+                <div className="text-center mb-4">
                     <div className="flex items-center justify-center gap-2 mb-4">
                         <Star className="size-5 text-yellow-400 fill-yellow-400" />
                         <span className="text-sm font-medium text-gray-600">Profesional Verificado</span>
@@ -62,9 +64,32 @@ export default function InternalPublicProfileView({ user, events }: PublicProfil
                         </div>
                     </div>
                     <div className="max-w-2xl mx-auto">
-                        <p className="text-lg text-gray-600 mb-4">
-                            Selecciona el servicio que deseas reservar y encontremos el mejor horario para tu cita.
-                        </p>
+                        {
+                            isOwner ? (
+                                <>
+                                    <p className="text-lg text-gray-600 mb-4">
+                                        Así veran la página tus clientes, modifica la información a tu gusto con el botón de configuración y copia el link para compartir tu página.
+                                    </p>
+                                    <div className="flex items-center justify-center gap-4 mb-4">
+                                        <Link 
+                                            href="/my-page/profile-config" 
+                                            className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                        >
+                                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                            Configuración
+                                        </Link>
+                                        {copyButton}
+                                    </div>
+                                </>
+                            ) : (
+                                <p className="text-lg text-gray-600 mb-4">
+                                    Selecciona el servicio que deseas reservar y encontremos el mejor horario para tu cita.
+                                </p>
+                            )
+                        }
                         <div className="flex items-center justify-center gap-4 text-gray-500">
                             <div className="flex items-center gap-2">
                                 <CalendarCheck className="size-5" />

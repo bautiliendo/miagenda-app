@@ -43,7 +43,7 @@ function AccountButton() {
                             userButtonTrigger: "p-0 hover:bg-transparent",
                             userButtonPopoverCard: { pointerEvents: "initial" }
                         }
-                        
+
                     }}
                 />
             </div>
@@ -89,16 +89,15 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
             label: 'Configurar mi página',
             icon: Settings,
             href: userId ? `/my-page/${userId}` : '#',
-            color: 'text-red-600',
             variant: 'ghost'
         },
-         {
-            label: 'Mi página (comentar)',
-            icon: User,
-            href: userId ? `/book/${userId}` : '#',
-            color: 'text-red-600',
-            variant: 'ghost'
-        },
+        //  {
+        //     label: 'Mi página (comentar)',
+        //     icon: User,
+        //     href: userId ? `/book/${userId}` : '#',
+        //     color: 'text-red-600',
+        //     variant: 'ghost'
+        // },
         {
             label: 'Notificaciones',
             icon: Bell,

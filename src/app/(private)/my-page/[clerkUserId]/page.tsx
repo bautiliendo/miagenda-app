@@ -2,6 +2,7 @@ import InternalPublicProfileView from "@/components/profile/internal-public-prof
 import { db } from "@/drizzle/db";
 import { clerkClient, auth } from "@clerk/nextjs/server";
 import { notFound, redirect } from "next/navigation";
+import { CopyProfileButton } from "@/components/CopyEventButton";
 
 export const revalidate = 0;
 interface PageProps {
@@ -58,6 +59,8 @@ export default async function MyPagePreview({ params }: PageProps) {
     },
     events,
     clerkUserId,
+    isOwner: userId === clerkUserId,
+    copyButton: <CopyProfileButton clerkUserId={clerkUserId} />,
   };
 
   return <InternalPublicProfileView {...viewData} />;
