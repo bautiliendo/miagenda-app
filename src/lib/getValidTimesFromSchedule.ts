@@ -1,7 +1,7 @@
 import { DAYS_OF_WEEK_IN_ORDER } from "@/data/constants"
 import { db } from "@/drizzle/db"
 import { ScheduleAvailabilityTable } from "@/drizzle/schema"
-import { getCalendarEventTimes } from "@/server/googleCalendar"
+import { getCalendarEventTimes } from "@/server/actions/googleCalendar"
 import {
   addMinutes,
   areIntervalsOverlapping,
