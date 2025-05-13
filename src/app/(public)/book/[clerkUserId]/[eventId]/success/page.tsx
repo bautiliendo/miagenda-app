@@ -10,6 +10,7 @@ import { formatDateTime } from "@/lib/formatters"
 import { clerkClient } from "@clerk/nextjs/server"
 import { notFound } from "next/navigation"
 import { CheckCircle } from "lucide-react"
+import Footer from "@/components/footer"
 
 export const revalidate = 0
 
@@ -38,9 +39,9 @@ export default async function SuccessPage({ params, searchParams }: PageProps) {
     const startTimeDate = new Date(startTime)
 
     return (
-        <div className=" bg-gradient-to-b from-white to-gray-50 p-6 flex items-center justify-center">
-            <div className="w-full max-w-xl">
-                <Card className="shadow-lg border-gray-200">
+        <div className="flex flex-col min-h-screen bg-gradient-to-b from-white to-gray-50 p-6 ">
+            <div className="flex mx-auto w-full max-w-xl items-center justify-center">
+                <Card className="shadow-lg border-gray-200 w-full">
                     <CardHeader className="border-b bg-gray-50/50 text-center">
                         <div className="mx-auto size-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
                             <CheckCircle className="size-8 text-green-600" />
@@ -59,6 +60,9 @@ export default async function SuccessPage({ params, searchParams }: PageProps) {
                         <p className="mt-2">¡Ya puedes cerrar esta página!</p>
                     </CardContent>
                 </Card>
+            </div>
+            <div className="mt-auto pt-6">
+                <Footer />
             </div>
         </div>
     )

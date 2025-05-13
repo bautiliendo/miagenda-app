@@ -1,4 +1,5 @@
 import { MeetingForm } from "@/components/forms/MeetingForm"
+import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -56,33 +57,36 @@ export default async function BookEventPage({ params }: PageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-6 flex items-center justify-center">
-      <div className="w-full max-w-4xl">
-        <Card className="shadow-lg border-gray-200">
-          <CardHeader className="border-b bg-gray-50/50">
-            <div className="flex items-center gap-2">
-              <CardTitle className="text-2xl text-gray-900">
-                Reserva tu cita
-              </CardTitle>
-              <span className="text-2xl text-gray-900">con</span>
-              <span className="text-2xl font-semibold text-blue-600">{calendarUser.fullName}</span>
-            </div>
-            <CardDescription className="text-gray-600 mt-2">
-              <div className="font-medium text-blue-600">{event.name}</div>
-              {event.description && (
-                <div className="mt-2">{event.description}</div>
-              )}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-6">
-            <MeetingForm
-              validTimes={validTimes}
-              eventId={event.id}
-              clerkUserId={clerkUserId}
-            />
-          </CardContent>
-        </Card>
+    <div> 
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-6 flex items-center justify-center">
+        <div className="w-full max-w-4xl">
+          <Card className="shadow-lg border-gray-200">
+            <CardHeader className="border-b bg-gray-50/50">
+              <div className=" items-center gap-2">
+                <CardTitle className="text-2xl text-gray-900">
+                  Reserva tu cita
+                </CardTitle>
+                <span className="text-2xl text-gray-900">con </span>
+                <span className="text-2xl font-semibold text-blue-600">{calendarUser.fullName}</span>
+              </div>
+              <CardDescription className="text-gray-600 mt-2">
+                <div className="font-medium text-blue-600">{event.name}</div>
+                {event.description && (
+                  <div className="mt-2">{event.description}</div>
+                )}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <MeetingForm
+                validTimes={validTimes}
+                eventId={event.id}
+                clerkUserId={clerkUserId}
+              />
+            </CardContent>
+          </Card>
+        </div>
       </div>
+      <Footer />
     </div>
   )
 }
@@ -113,7 +117,7 @@ function NoTimeSlots({
             <p>{calendarUser.fullName} tiene su agenda completa en este momento. Por favor, intentá más tarde o elegí otro servicio.</p>
           </CardContent>
           <CardFooter className="border-t bg-gray-50/50">
-            <Button 
+            <Button
               asChild
               className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all"
             >

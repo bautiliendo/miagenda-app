@@ -7,13 +7,13 @@ import {
     Menu,
     LayoutDashboard,
     Calendar,
-    Users,
+    // Users,
     User,
     LucideIcon,
     CalendarClock,
     ExternalLink,
     HelpCircle,
-    Bell,
+    // Bell,
     Settings,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -75,16 +75,15 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
             label: 'Agenda',
             icon: Calendar,
             href: '/agenda',
-            color: 'text-red-600',
             variant: 'ghost'
         },
-        {
-            label: 'Clientes',
-            icon: Users,
-            href: '/clients',
-            color: 'text-red-600',
-            variant: 'ghost'
-        },
+        // {
+        //     label: 'Clientes',
+        //     icon: Users,
+        //     href: '/clients',
+        //     color: 'text-red-600',
+        //     variant: 'ghost'
+        // },
         {
             label: 'Configurar mi página',
             icon: Settings,
@@ -98,13 +97,13 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
         //     color: 'text-red-600',
         //     variant: 'ghost'
         // },
-        {
-            label: 'Notificaciones',
-            icon: Bell,
-            href: '/notifications',
-            color: 'text-red-600',
-            variant: 'ghost'
-        },
+        // {
+        //     label: 'Notificaciones',
+        //     icon: Bell,
+        //     href: '/notifications',
+        //     color: 'text-red-600',
+        //     variant: 'ghost'
+        // },
         {
             label: 'Volver al sitio',
             icon: ExternalLink,
