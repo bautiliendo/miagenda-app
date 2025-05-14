@@ -3,7 +3,7 @@
 import { formatInTimeZone } from "date-fns-tz"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { es } from "date-fns/locale"
-import { Clock, User, Loader2, Mail } from "lucide-react"
+import { Clock, User, Loader2, Mail, Briefcase } from "lucide-react"
 import { Trash2 } from "lucide-react"
 import { Button } from "./ui/button"
 import { calendar_v3 } from "googleapis"
@@ -39,6 +39,8 @@ export function EventCard({ event }: { event: CalendarEvent }) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const clientName = event.summary?.split(" + ")[0] || "Cliente"
+    const serviceNamePart = event.summary?.split(": ")[1];
+    const serviceName = serviceNamePart || "Servicio no especificado";
     const dayFormatted = formatInTimeZone(event.start, displayTimezone, "d", { locale: es })
     const monthFormatted = formatInTimeZone(event.start, displayTimezone, "MMMM", { locale: es })
     const dayOfWeekFormatted = formatInTimeZone(event.start, displayTimezone, "EEEE", { locale: es })
@@ -125,6 +127,10 @@ export function EventCard({ event }: { event: CalendarEvent }) {
                 </div>
             </CardHeader>
             <CardContent className="pt-2">
+                <div className="flex items-center gap-2 text-gray-700 mb-2">
+                    <Briefcase className="size-4 text-gray-500" />
+                    <span className="font-medium">{serviceName}</span>
+                </div>
                 <div className="flex items-center gap-2 text-gray-700 mb-2">
                     <User className="size-4 text-gray-500" />
                     <span className="font-medium">{clientName}</span>
