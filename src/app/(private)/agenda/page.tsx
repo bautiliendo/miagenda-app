@@ -116,9 +116,17 @@ export default async function AgendaPage() {
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <div className="grid gap-4 mt-4">
-                      {monthEvents.map((event, index) => (
-                        <EventCard key={index} event={event} />
-                      ))}
+                      {monthEvents.map((event, index) => {
+                        const eventForCard = {
+                          ...event,
+                          extendedProperties: {
+                            private: {
+                              guestPhone: event.extendedProperties?.private?.guestPhone || null,
+                            },
+                          },
+                        };
+                        return <EventCard key={index} event={eventForCard} />;
+                      })}
                     </div>
                   </CollapsibleContent>
                 </Collapsible>
@@ -130,9 +138,17 @@ export default async function AgendaPage() {
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <div className="grid gap-4 mt-4">
-                      {monthEvents.map((event, index) => (
-                        <EventCard key={index} event={event} />
-                      ))}
+                      {monthEvents.map((event, index) => {
+                        const eventForCard = {
+                          ...event,
+                          extendedProperties: {
+                            private: {
+                              guestPhone: event.extendedProperties?.private?.guestPhone || null,
+                            },
+                          },
+                        };
+                        return <EventCard key={index} event={eventForCard} />;
+                      })}
                     </div>
                   </CollapsibleContent>
                 </Collapsible>
