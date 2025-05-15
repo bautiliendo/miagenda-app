@@ -7,13 +7,13 @@ import {
     Menu,
     LayoutDashboard,
     Calendar,
-    Users,
+    // Users,
     User,
     LucideIcon,
     CalendarClock,
     ExternalLink,
     HelpCircle,
-    Bell,
+    // Bell,
     Settings,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -43,7 +43,7 @@ function AccountButton() {
                             userButtonTrigger: "p-0 hover:bg-transparent",
                             userButtonPopoverCard: { pointerEvents: "initial" }
                         }
-                        
+
                     }}
                 />
             </div>
@@ -75,37 +75,35 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
             label: 'Agenda',
             icon: Calendar,
             href: '/agenda',
-            color: 'text-red-600',
             variant: 'ghost'
         },
-        {
-            label: 'Clientes',
-            icon: Users,
-            href: '/clients',
-            color: 'text-red-600',
-            variant: 'ghost'
-        },
+        // {
+        //     label: 'Clientes',
+        //     icon: Users,
+        //     href: '/clients',
+        //     color: 'text-red-600',
+        //     variant: 'ghost'
+        // },
         {
             label: 'Configurar mi página',
             icon: Settings,
             href: userId ? `/my-page/${userId}` : '#',
-            color: 'text-red-600',
             variant: 'ghost'
         },
-         {
-            label: 'Mi página (comentar)',
-            icon: User,
-            href: userId ? `/book/${userId}` : '#',
-            color: 'text-red-600',
-            variant: 'ghost'
-        },
-        {
-            label: 'Notificaciones',
-            icon: Bell,
-            href: '/notifications',
-            color: 'text-red-600',
-            variant: 'ghost'
-        },
+        //  {
+        //     label: 'Mi página (comentar)',
+        //     icon: User,
+        //     href: userId ? `/book/${userId}` : '#',
+        //     color: 'text-red-600',
+        //     variant: 'ghost'
+        // },
+        // {
+        //     label: 'Notificaciones',
+        //     icon: Bell,
+        //     href: '/notifications',
+        //     color: 'text-red-600',
+        //     variant: 'ghost'
+        // },
         {
             label: 'Volver al sitio',
             icon: ExternalLink,
@@ -136,7 +134,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
                     <div className="px-3 py-2 flex-1">
                         <div className="mb-4">
                             <NavLink href="/events" className="flex items-center px-4">
-                                <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 text-transparent bg-clip-text">
+                                <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 text-transparent bg-clip-text">
                                     AgendIA
                                 </span>
                             </NavLink>
@@ -168,7 +166,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
                 <div className="flex-1 h-full">
                     <header className="fixed top-0 left-0 w-full bg-white border-b z-50 py-2 md:hidden">
                         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-                            <NavLink href="/events" className="md:hidden text-2xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 text-transparent bg-clip-text">
+                            <NavLink href="/events" className="md:hidden text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 text-transparent bg-clip-text">
                                 AgendIA
                             </NavLink>
                             <div className="md:hidden">
@@ -183,7 +181,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
                                             <div className="px-3 py-2 flex-1">
                                                 <div className="mb-4">
                                                     <NavLink href="/events" className="flex items-center">
-                                                        <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 text-transparent bg-clip-text">
+                                                        <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 text-transparent bg-clip-text">
                                                             AgendIA
                                                         </span>
                                                     </NavLink>

@@ -40,6 +40,39 @@ export function CopyEventButton({
         </Button>
     )
 }
+
+export function CopyProfileButton({
+    clerkUserId,
+    ...buttonProps
+  }: Omit<ComponentProps<typeof Button>, "children"> & {
+    clerkUserId: string
+}) {
+    const [copyState, setCopyState] = useState<CopyState>("idle")
+
+    const CopyIcon = getCopyIcon(copyState)
+
+    return (
+        <Button
+            {...buttonProps}
+            onClick={() => {
+                navigator.clipboard
+                  .writeText(`${location.origin}/book/${clerkUserId}`)
+                  .then(() => {
+                    setCopyState("copied")
+                    setTimeout(() => setCopyState("idle"), 2000)
+                  })
+                  .catch(() => {
+                    setCopyState("error")
+                    setTimeout(() => setCopyState("idle"), 2000)
+                  })
+            }}
+        >
+            <CopyIcon className="size-4 mr-2" />
+            {getChildren(copyState)}
+        </Button>
+    )
+}
+
 function getCopyIcon(copyState: CopyState) {
   switch (copyState) {
     case "idle":
@@ -61,3 +94,5 @@ function getChildren(copyState: CopyState) {
       return "Error"
   }
 }
+
+

@@ -1,38 +1,35 @@
-import { getCalendarEventTimes } from "@/server/googleCalendar"
+import { getCalendarEventTimes } from "@/server/actions/googleCalendar"
 import { auth } from "@clerk/nextjs/server"
-// import { format } from "date-fns"
 import { es } from "date-fns/locale"
-import { Clock, User, ChevronDown, Pencil, Trash2, Phone } from "lucide-react"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { CalendarPlus, ChevronDown } from "lucide-react"
+import Link from "next/link"
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
-import { Button } from "@/components/ui/button"
-import { calendar_v3 } from "googleapis"
 import { formatInTimeZone } from "date-fns-tz"
+import { EventCard } from "@/components/EventCard"
+import { Button } from "@/components/ui/button"
+import { db } from "@/drizzle/db"
 
-interface CalendarEvent {
-  start: Date
-  end: Date
-  summary?: string | null
-  description?: string | null
-  attendees?: calendar_v3.Schema$EventAttendee[]
-}
-
-const displayTimezone = "America/Cordoba"; // Define target timezone
+const displayTimezone = "America/Cordoba";
 
 export default async function AgendaPage() {
   const { userId } = await auth()
 
   if (userId == null) return null
+
+  // Fetch active event types for the user
+  const eventTypes = await db.query.EventTable.findMany({
+    where: ({ clerkUserId: cId, isActive }, { eq, and }) =>
+      and(eq(cId, userId), eq(isActive, true)),
+    columns: {
+      id: true,
+      name: true,
+    },
+    orderBy: ({ name }, { asc }) => [asc(name)],
+  });
 
   const today = new Date()
   const startOfCurrentDay = new Date(today.getFullYear(), today.getMonth(), today.getDate())
@@ -65,13 +62,41 @@ export default async function AgendaPage() {
   return (
     <div className="p-6">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-8">
+        <div className="flex flex-col">
           <h1 className="text-3xl lg:text-4xl font-bold text-gray-900">
             Agenda
           </h1>
           <p className="mt-2 text-gray-600 text-lg">
             Aquí puedes ver todas tus citas programadas
           </p>
+
+          <div className="my-6">
+            {eventTypes.length === 0 && (
+              <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <p className="text-yellow-700">
+                  No tienes tipos de servicios activos para crear nuevas citas.
+                  <br />
+                  Puedes gestionarlos en <Link href="/events" className="font-semibold underline hover:text-yellow-800">configuración de servicios</Link>.
+                </p>
+              </div>
+            )}
+            {eventTypes.length >= 1 && (
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h2 className="text-xl font-semibold mb-3 text-blue-800">Crear Nueva Cita:</h2>
+                <p className="mb-3 text-blue-700">Selecciona el tipo de evento para el cual deseas añadir una nueva cita:</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                  {eventTypes.map(eventType => (
+                    <Button key={eventType.id} variant="outline" className="w-full justify-start text-left h-auto py-3 bg-white hover:bg-gray-50 border-gray-300" asChild>
+                      <Link href={`/agenda/new-meeting?eventId=${eventType.id}`}>
+                        <CalendarPlus className="mr-3 size-5 flex-shrink-0" />
+                        <span className="flex-grow">{eventType.name}</span>
+                      </Link>
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="grid gap-6">
@@ -117,58 +142,5 @@ export default async function AgendaPage() {
         </div>
       </div>
     </div>
-  )
-}
-
-function EventCard({ event }: { event: CalendarEvent }) {
-  const clientName = event.summary?.split(" + ")[0] || "Cliente"
-  const dayFormatted = formatInTimeZone(event.start, displayTimezone, "d", { locale: es })
-  const monthFormatted = formatInTimeZone(event.start, displayTimezone, "MMMM", { locale: es })
-  const dayOfWeekFormatted = formatInTimeZone(event.start, displayTimezone, "EEEE", { locale: es })
-
-  return (
-    <Card className="max-w-3xl hover:shadow-md transition-shadow">
-      <CardHeader className="pb-2">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3 sm:gap-4">
-            <div className="flex flex-col items-center justify-center bg-blue-100 text-blue-700 rounded-md p-2 min-w-14 h-14 sm:min-w-16 sm:h-16">
-              <span className="text-xl font-bold sm:text-2xl">{dayFormatted}</span>
-              <span className="text-xs capitalize sm:text-sm">{monthFormatted.substring(0, 3)}</span>
-            </div>
-            <div>
-              <CardTitle className="text-base sm:text-lg capitalize">
-                {dayOfWeekFormatted}
-              </CardTitle>
-              <CardDescription className="flex items-center gap-2 mt-1">
-                <Clock className="size-3.5 text-gray-500" />
-                <span>
-                  {formatInTimeZone(event.start, displayTimezone, "HH:mm", { locale: es })} - {formatInTimeZone(event.end, displayTimezone, "HH:mm", { locale: es })}
-                </span>
-              </CardDescription>
-            </div>
-          </div>
-          <div className="flex gap-1 sm:gap-2">
-            <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-9 sm:w-9">
-              <Phone className="size-4 text-blue-600" />
-            </Button>
-            <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-9 sm:w-9">
-              <Pencil className="size-4 text-gray-500" />
-            </Button>
-            <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-9 sm:w-9">
-              <Trash2 className="size-4 text-red-500" />
-            </Button>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent className="pt-2">
-        <div className="flex items-center gap-2 text-gray-700 mb-2">
-          <User className="size-4 text-gray-500" />
-          <span className="font-medium">{clientName}</span>
-        </div>
-        {event.description && (
-          <p className="text-gray-600 text-sm mt-2 border-t pt-2">{event.description}</p>
-        )}
-      </CardContent>
-    </Card>
   )
 }

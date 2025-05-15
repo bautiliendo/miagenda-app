@@ -31,10 +31,10 @@ import "react-day-picker/dist/style.css"
 import { isSameDay } from "date-fns"
 import { useMemo } from "react"
 import { toZonedTime } from "date-fns-tz"
-import { createMeeting } from "@/server/actions/meetings"
+import { createMeetingSelf } from "@/server/actions/meetings"
 import { dayPickerStyles } from "../DaypickerStyles"
 
-export function MeetingForm({
+export function MeetingFormSelf({
   validTimes,
   eventId,
   clerkUserId,
@@ -69,7 +69,7 @@ export function MeetingForm({
       form.setError("root", { message: "Por favor selecciona fecha y hora." });
       return;
     }
-    const data = await createMeeting({
+    const data = await createMeetingSelf({
        ...values,
        eventId,
        clerkUserId,
@@ -230,7 +230,7 @@ export function MeetingForm({
             className="border-gray-200 hover:bg-gray-50"
             disabled={form.formState.isSubmitting}
           >
-            <Link href={`/book/${clerkUserId}`}>Cancelar</Link>
+            <Link href={`/agenda`}>Cancelar</Link>
           </Button>
           <Button
             disabled={form.formState.isSubmitting}

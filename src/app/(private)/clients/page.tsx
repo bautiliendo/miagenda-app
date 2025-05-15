@@ -1,4 +1,4 @@
-import { getCalendarEventTimes } from "@/server/googleCalendar"
+import { getCalendarEventTimes } from "@/server/actions/googleCalendar"
 import { auth } from "@clerk/nextjs/server"
 // import { format } from "date-fns"
 import { es } from "date-fns/locale"
