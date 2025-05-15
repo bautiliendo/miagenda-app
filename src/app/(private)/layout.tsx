@@ -1,19 +1,17 @@
 "use client";
 
 import { NavLink } from "@/components/NavLink"
-import { UserButton, useAuth } from "@clerk/nextjs"
+import { useAuth } from "@clerk/nextjs"
 import { ReactNode, useState } from "react"
 import {
     Menu,
     LayoutDashboard,
     Calendar,
-    // Users,
     User,
     LucideIcon,
     CalendarClock,
     ExternalLink,
     HelpCircle,
-    // Bell,
     Settings,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -22,6 +20,7 @@ import {
     SheetContent,
     SheetTrigger,
 } from "@/components/ui/sheet"
+import { AccountButton } from "@/components/AccountButton";
 
 interface Route {
     label: string;
@@ -30,26 +29,6 @@ interface Route {
     color?: string;
     variant?: 'default' | 'ghost';
     isUserButton?: boolean;
-}
-
-function AccountButton() {
-    return (
-        <div className="w-full flex items-center gap-x-2 text-gray-600 text-sm font-[500] pl-6 py-4 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all">
-            <div className="h-5 w-5 -ml-2 mb-1">
-                <UserButton
-                    appearance={{
-                        elements: {
-                            userButtonAvatarBox: "size-5",
-                            userButtonTrigger: "p-0 hover:bg-transparent",
-                            userButtonPopoverCard: { pointerEvents: "initial" }
-                        }
-
-                    }}
-                />
-            </div>
-            <span className="pl-2 pt-1">Mi cuenta</span>
-        </div>
-    )
 }
 
 export default function PrivateLayout({ children }: { children: ReactNode }) {
@@ -115,7 +94,6 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
             label: 'Ayuda',
             icon: HelpCircle,
             href: '/help',
-            color: 'text-red-600',
             variant: 'ghost'
         },
         {
