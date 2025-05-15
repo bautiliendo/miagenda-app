@@ -48,6 +48,7 @@ export async function getCalendarEventTimes(
             summary: event.summary,
             description: event.description,
             attendees: event.attendees,
+            extendedProperties: event.extendedProperties,
           };
         })
         .filter((event): event is NonNullable<typeof event> => event != null) ||
@@ -63,6 +64,7 @@ export async function createCalendarEvent({
   clerkUserId,
   guestName,
   guestEmail,
+  guestPhone,
   startTime,
   guestNotes,
   durationInMinutes,
@@ -71,6 +73,7 @@ export async function createCalendarEvent({
   clerkUserId: string;
   guestName: string;
   guestEmail: string;
+  guestPhone: string;
   startTime: Date;
   guestNotes?: string | null;
   durationInMinutes: number;
@@ -98,7 +101,7 @@ export async function createCalendarEvent({
           {
             email: primaryEmailAddress.emailAddress,
             displayName: fullName,
-            responseStatus: "accepted",
+            responseStatus: "needsAction",
           },
         ],
         description: guestNotes
@@ -111,6 +114,11 @@ export async function createCalendarEvent({
           dateTime: addMinutes(startTime, durationInMinutes).toISOString(),
         },
         summary: `${guestName} + ${fullName}: ${eventName}`,
+        extendedProperties: {
+          private: {
+            guestPhone: guestPhone,
+          },
+        },
       },
     });
     return calendarEvent.data;

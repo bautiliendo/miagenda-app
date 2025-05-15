@@ -23,7 +23,9 @@ const profileConfigFormSchema = z.object({
     location: z.string().optional(),
     facebookUrl: z.string().url("Debe ser una URL válida").optional().or(z.literal("")),
     instagramUrl: z.string().url("Debe ser una URL válida").optional().or(z.literal("")),
-    whatsappNumber: z.string().optional(),
+    whatsappNumber: z.string()
+        .transform(val => val.replace(/\s/g, "")) // Eliminar espacios
+        .pipe(z.string().regex(/^\d{10}$/, "El número debe contener 10 dígitos. Ejemplo: 351 123 4567")), // Validar 10 dígitos
 })
 
 type FormValues = z.infer<typeof profileConfigFormSchema>

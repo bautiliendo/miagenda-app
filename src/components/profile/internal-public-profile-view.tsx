@@ -71,8 +71,8 @@ export default function InternalPublicProfileView({ user, events, isOwner, copyB
                                         Así veran la página tus clientes, modifica la información a tu gusto con el botón de configuración y copia el link para compartir tu página.
                                     </p>
                                     <div className="flex items-center justify-center gap-4 mb-4">
-                                        <Link 
-                                            href="/my-page/profile-config" 
+                                        <Link
+                                            href="/my-page/profile-config"
                                             className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                         >
                                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -148,12 +148,26 @@ export default function InternalPublicProfileView({ user, events, isOwner, copyB
                 </div>
 
                 <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    {events.map(event => (
-                        <EventCard key={event.id} {...event} />
-                    ))}
+                    {
+                        events.length > 0 ? (
+                            events.map(event => (
+                                <EventCard key={event.id} {...event} />
+                            ))
+                        ) : (
+                            <div className="col-span-full">
+                                <p className="text-gray-600">No hay eventos disponibles.
+                                </p>
+                                <Link href="/events" className="text-blue-600 hover:text-blue-700 transition-colors">
+                                    Crea uno para que tus clientes puedan reservar
+                                </Link>
+                            </div>
+                        )
+                    }
                 </div>
             </div>
-            <Footer />
+            {
+                !isOwner && <Footer />
+            }
         </div>
     );
 }

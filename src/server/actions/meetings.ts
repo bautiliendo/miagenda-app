@@ -34,6 +34,7 @@ export async function createMeeting(
     startTime: correctStartTime,
     durationInMinutes: event.durationInMinutes,
     eventName: event.name,
+    
   });
 
   redirect(
