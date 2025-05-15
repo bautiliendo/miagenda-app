@@ -80,15 +80,7 @@ export default async function AgendaPage() {
                 </p>
               </div>
             )}
-            {eventTypes.length === 1 && (
-              <Button className="w-fit" asChild>
-                <Link href={`/agenda/new-meeting?eventId=${eventTypes[0].id}`}>
-                  <CalendarPlus className="mr-2 size-5" />
-                  <span>Añadir Nueva cita ({eventTypes[0].name})</span>
-                </Link>
-              </Button>
-            )}
-            {eventTypes.length > 1 && (
+            {eventTypes.length >= 1 && (
               <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                 <h2 className="text-xl font-semibold mb-3 text-blue-800">Crear Nueva Cita:</h2>
                 <p className="mb-3 text-blue-700">Selecciona el tipo de evento para el cual deseas añadir una nueva cita:</p>

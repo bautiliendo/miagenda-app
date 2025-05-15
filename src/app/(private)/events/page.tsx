@@ -43,16 +43,19 @@ export default async function Eventspage() {
                         <p className="mt-2 text-gray-600 text-lg">
                             Gestiona los servicios que ofreces a tus clientes
                         </p>
-                        <Button
-                            asChild
-                            variant="default"
-                            className="mt-6 bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all"
-                        >
-                            <Link href='/events/new'>
-                                <CalendarPlus className="mr-2 size-5" />
-                                <span>Añadir Nuevo Servicio</span>
-                            </Link>
-                        </Button>
+                        {events.length !== 0 && (
+                            <Button
+                                asChild
+                                variant="default"
+                                className="mt-6 bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all"
+                            >
+                                <Link href='/events/new'>
+                                    <CalendarPlus className="mr-2 size-5" />
+                                    <span>Añadir Nuevo Servicio</span>
+                                </Link>
+                            </Button>
+                        )
+                        }
                     </div>
                 </div>
 

@@ -25,20 +25,18 @@ import { MeetingFormSelf } from "@/components/forms/MeetingFormSelf"
 export const revalidate = 0
 
 interface PageProps {
-    searchParams?: {
-        eventId?: string;
-    }
+    searchParams: Promise<{
+        eventId: string;
+    }>;
 }
 
 export default async function NewMeetingPage({ searchParams }: PageProps) {
     const { userId: loggedInClerkUserId } = await auth();
-    const parametros = await searchParams;
+    const { eventId } = await searchParams;
 
     if (!loggedInClerkUserId) {
         redirect("/sign-in");
     }
-
-    const eventId = parametros?.eventId;
 
     if (!eventId) {
         console.error("NewMeetingPage: eventId is missing from searchParams.");
