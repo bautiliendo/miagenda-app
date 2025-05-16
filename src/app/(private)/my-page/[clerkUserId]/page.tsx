@@ -29,9 +29,6 @@ export default async function MyPagePreview({ params }: PageProps) {
     orderBy: ({ name }, { asc, sql }) => asc(sql`lower(${name})`),
   });
 
-  if (events.length === 0 && process.env.NODE_ENV === 'production') {
-    return notFound();
-  }
 
   let userToShow;
   try {

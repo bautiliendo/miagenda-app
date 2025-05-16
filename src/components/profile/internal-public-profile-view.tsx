@@ -48,7 +48,7 @@ export default function InternalPublicProfileView({ user, events, isOwner, copyB
                         <span className="text-sm font-medium text-gray-600">Profesional Verificado</span>
                     </div>
                     <div className="flex flex-col items-center gap-4 mb-4">
-                        <div className="flex items-center justify-center gap-4">
+                        <div className="flex flex-col items-center gap-2 lg:flex-row md:items-center md:justify-center md:gap-4">
                             <div className="relative size-16 md:size-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border-2 border-gray-200">
                                 {imageUrl ? (
                                     <Image src={imageUrl} alt={fullName ?? 'Perfil'} fill className="object-cover" />
@@ -58,7 +58,7 @@ export default function InternalPublicProfileView({ user, events, isOwner, copyB
                                     </svg>
                                 )}
                             </div>
-                            <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
+                            <h1 className="text-3xl text-center sm:text-4xl md:text-5xl font-bold text-gray-900">
                                 {fullName}
                             </h1>
                         </div>
@@ -155,11 +155,11 @@ export default function InternalPublicProfileView({ user, events, isOwner, copyB
                             ))
                         ) : (
                             <div className="col-span-full">
-                                <p className="text-gray-600">No hay eventos disponibles.
+                                <p className="text-gray-600">{isOwner ? "No hay servicios disponibles." : "Este profesional no tiene servicios disponibles."}
                                 </p>
-                                <Link href="/events" className="text-blue-600 hover:text-blue-700 transition-colors">
+                                {isOwner && <Link href="/events" className="text-blue-600 hover:text-blue-700 transition-colors">
                                     Crea uno para que tus clientes puedan reservar
-                                </Link>
+                                </Link>}
                             </div>
                         )
                     }
