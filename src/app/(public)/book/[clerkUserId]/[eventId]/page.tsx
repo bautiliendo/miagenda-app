@@ -51,7 +51,7 @@ export default async function BookEventPage({ params }: PageProps) {
   )
 
   if (validTimes.length === 0) {
-    return <NoTimeSlots event={event} calendarUser={calendarUser} />
+    return <NoTimeSlots event={event} calendarUser={calendarUser} isOwner={false}/>
   }
 
   return (

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -146,7 +147,9 @@ export default function Pricing() {
             </ul>
 
             <button className="mt-auto bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition">
-              Empezar 30 días gratis
+              <Link href="/sign-up">
+                Empezar 30 días gratis
+              </Link>
             </button>
           </motion.div>
         ))}

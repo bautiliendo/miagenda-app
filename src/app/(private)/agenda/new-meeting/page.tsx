@@ -88,7 +88,7 @@ export default async function NewMeetingPage({ searchParams }: PageProps) {
     )
 
     if (validTimes.length === 0) {
-        return <NoTimeSlots event={event} calendarUser={calendarUser} />
+        return <NoTimeSlots event={event} calendarUser={calendarUser} isOwner={true} />
     }
 
     return (

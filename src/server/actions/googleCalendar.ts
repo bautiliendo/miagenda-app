@@ -128,7 +128,7 @@ export async function createCalendarEvent({
   }
 }
 
-async function getOAuthClient(clerkUserId: string) {
+export async function getOAuthClient(clerkUserId: string) {
   try {
     const response = await (
       await clerkClient()
