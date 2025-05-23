@@ -1,7 +1,6 @@
 
 import { db } from "@/drizzle/db"
 import { clerkClient } from "@clerk/nextjs/server"
-import { notFound } from "next/navigation"
 import InternalPublicProfileView, { UserData, EventData, PublicProfileViewProps } from "@/components/profile/internal-public-profile-view"
 
 export const revalidate = 0
@@ -20,8 +19,6 @@ export default async function BookingPage({ params }: PageProps) {
       and(eq(userIdCol, clerkUserId), eq(isActive, true)),
     orderBy: ({ name }, { asc, sql }) => asc(sql`lower(${name})`),
   })
-
-  if (eventsRaw.length === 0) return notFound()
 
   const userRaw = await (await clerkClient()).users.getUser(clerkUserId)
   const { fullName, primaryEmailAddress, primaryPhoneNumber, imageUrl } = userRaw

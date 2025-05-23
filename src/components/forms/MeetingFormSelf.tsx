@@ -49,6 +49,7 @@ export function MeetingFormSelf({
       timezone: "America/Cordoba",
       guestName: "",
       guestEmail: "",
+      guestPhone: "",
       guestNotes: "",
       date: undefined,
       startTime: undefined,
@@ -99,7 +100,7 @@ export function MeetingFormSelf({
           </div>
         </div>
 
-        <div className="flex gap-4 flex-col md:flex-row">
+        <div className="flex gap-4 flex-col ">
           <FormField
             control={form.control}
             name="date"
@@ -197,6 +198,19 @@ export function MeetingFormSelf({
                 <FormLabel className="text-gray-700">Email</FormLabel>
                 <FormControl>
                   <Input type="email" className="bg-white border-gray-200" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="guestPhone"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel className="text-gray-700">Teléfono</FormLabel>
+                <FormControl>
+                  <Input type="tel" className="bg-white border-gray-200" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

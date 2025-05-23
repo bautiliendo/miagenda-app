@@ -1,7 +1,7 @@
-import { getCalendarEventTimes } from "@/server/actions/googleCalendar"
+import { getCalendarEventTimes, getOAuthClient } from "@/server/actions/googleCalendar"
 import { auth } from "@clerk/nextjs/server"
 import { es } from "date-fns/locale"
-import { CalendarPlus, ChevronDown } from "lucide-react"
+import { CalendarPlus, ChevronDown, AlertTriangle } from "lucide-react"
 import Link from "next/link"
 import {
   Collapsible,
@@ -12,13 +12,34 @@ import { formatInTimeZone } from "date-fns-tz"
 import { EventCard } from "@/components/EventCard"
 import { Button } from "@/components/ui/button"
 import { db } from "@/drizzle/db"
+import { UserButton } from "@clerk/nextjs"
 
 const displayTimezone = "America/Cordoba";
 
 export default async function AgendaPage() {
   const { userId } = await auth()
-
   if (userId == null) return null
+  const client = await getOAuthClient(userId)
+
+  if (!client) {
+    return (
+      <div className="p-6 max-w-2xl mx-auto text-center">
+        <div className="bg-orange-50 border border-orange-200 p-6 rounded-lg shadow-md">
+          <AlertTriangle className="mx-auto h-12 w-12 text-orange-400 mb-4" />
+          <h2 className="text-2xl font-semibold text-orange-700 mb-3">
+            Conexión con Google Calendar Requerida
+          </h2>
+          <p className="text-orange-600 mb-6">
+            Para acceder a tu agenda y gestionar tus citas, es necesario que conectes tu cuenta de Google.
+          </p>
+          <UserButton showName={true}/>
+          <p className="text-sm text-gray-500 mt-4">
+            Haz click en el botón de tu cuenta, presiona &quot;Manage account&quot; y conecta tu cuenta de Google Calendar en &quot;Connected accounts&quot;.
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   // Fetch active event types for the user
   const eventTypes = await db.query.EventTable.findMany({
@@ -116,9 +137,17 @@ export default async function AgendaPage() {
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <div className="grid gap-4 mt-4">
-                      {monthEvents.map((event, index) => (
-                        <EventCard key={index} event={event} />
-                      ))}
+                      {monthEvents.map((event, index) => {
+                        const eventForCard = {
+                          ...event,
+                          extendedProperties: {
+                            private: {
+                              guestPhone: event.extendedProperties?.private?.guestPhone || null,
+                            },
+                          },
+                        };
+                        return <EventCard key={index} event={eventForCard} />;
+                      })}
                     </div>
                   </CollapsibleContent>
                 </Collapsible>
@@ -130,9 +159,17 @@ export default async function AgendaPage() {
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <div className="grid gap-4 mt-4">
-                      {monthEvents.map((event, index) => (
-                        <EventCard key={index} event={event} />
-                      ))}
+                      {monthEvents.map((event, index) => {
+                        const eventForCard = {
+                          ...event,
+                          extendedProperties: {
+                            private: {
+                              guestPhone: event.extendedProperties?.private?.guestPhone || null,
+                            },
+                          },
+                        };
+                        return <EventCard key={index} event={eventForCard} />;
+                      })}
                     </div>
                   </CollapsibleContent>
                 </Collapsible>

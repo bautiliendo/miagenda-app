@@ -3,7 +3,7 @@
 import { formatInTimeZone } from "date-fns-tz"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { es } from "date-fns/locale"
-import { Clock, User, Loader2, Mail, Briefcase } from "lucide-react"
+import { Clock, User, Loader2, Mail, Briefcase, Phone } from "lucide-react"
 import { Trash2 } from "lucide-react"
 import { Button } from "./ui/button"
 import { calendar_v3 } from "googleapis"
@@ -29,6 +29,11 @@ interface CalendarEvent {
     summary?: string | null
     description?: string | null
     attendees?: calendar_v3.Schema$EventAttendee[]
+    extendedProperties?: {
+        private?: {
+            guestPhone?: string | null
+        }
+    }
 }
 
 
@@ -44,6 +49,8 @@ export function EventCard({ event }: { event: CalendarEvent }) {
     const dayFormatted = formatInTimeZone(event.start, displayTimezone, "d", { locale: es })
     const monthFormatted = formatInTimeZone(event.start, displayTimezone, "MMMM", { locale: es })
     const dayOfWeekFormatted = formatInTimeZone(event.start, displayTimezone, "EEEE", { locale: es })
+    const guestPhone = event.extendedProperties?.private?.guestPhone || "Teléfono no especificado";
+    const guestEmail = event.attendees?.[0]?.email || "Correo no especificado";
 
     const handleDeleteConfirm = () => {
         startDeleteTransition(async () => {
@@ -64,7 +71,7 @@ export function EventCard({ event }: { event: CalendarEvent }) {
 
     return (
         <Card className="max-w-3xl hover:shadow-md transition-shadow">
-            <CardHeader className="pb-2">
+            <CardHeader className="">
                 <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3 sm:gap-4">
                         <div className="flex flex-col items-center justify-center bg-blue-100 text-blue-700 rounded-md p-2 min-w-14 h-14 sm:min-w-16 sm:h-16">
@@ -126,7 +133,7 @@ export function EventCard({ event }: { event: CalendarEvent }) {
                     </div>
                 </div>
             </CardHeader>
-            <CardContent className="pt-2">
+            <CardContent className="">
                 <div className="flex items-center gap-2 text-gray-700 mb-2">
                     <Briefcase className="size-4 text-gray-500" />
                     <span className="font-medium">{serviceName}</span>
@@ -135,14 +142,17 @@ export function EventCard({ event }: { event: CalendarEvent }) {
                     <User className="size-4 text-gray-500" />
                     <span className="font-medium">{clientName}</span>
                 </div>
+                <div className="flex items-center gap-2 text-gray-700 mb-2">
+                    <Phone className="size-4 text-gray-500" />
+                    <span className="font-medium">{guestPhone}</span>
+                </div>
+                <div className="flex items-center gap-2 text-gray-700 mb-2">
+                    <Mail className="size-4 text-gray-500" />
+                    <span className="font-medium">{guestEmail}</span>
+                </div>
+
                 {event.description && (
                     <p className="text-gray-600 text-sm mt-2 border-t pt-2">{event.description}</p>
-                )}
-                {event.attendees && event.attendees.length > 0 && (
-                    <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
-                        <Mail className="size-4 text-gray-500" />
-                        <span className="font-medium">{event.attendees[0].email}</span>
-                    </div>
                 )}
             </CardContent>
         </Card>

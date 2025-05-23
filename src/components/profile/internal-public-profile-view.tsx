@@ -48,7 +48,7 @@ export default function InternalPublicProfileView({ user, events, isOwner, copyB
                         <span className="text-sm font-medium text-gray-600">Profesional Verificado</span>
                     </div>
                     <div className="flex flex-col items-center gap-4 mb-4">
-                        <div className="flex items-center justify-center gap-4">
+                        <div className="flex flex-col items-center gap-2 lg:flex-row md:items-center md:justify-center md:gap-4">
                             <div className="relative size-16 md:size-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border-2 border-gray-200">
                                 {imageUrl ? (
                                     <Image src={imageUrl} alt={fullName ?? 'Perfil'} fill className="object-cover" />
@@ -58,7 +58,7 @@ export default function InternalPublicProfileView({ user, events, isOwner, copyB
                                     </svg>
                                 )}
                             </div>
-                            <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
+                            <h1 className="text-3xl text-center sm:text-4xl md:text-5xl font-bold text-gray-900">
                                 {fullName}
                             </h1>
                         </div>
@@ -71,8 +71,8 @@ export default function InternalPublicProfileView({ user, events, isOwner, copyB
                                         Así veran la página tus clientes, modifica la información a tu gusto con el botón de configuración y copia el link para compartir tu página.
                                     </p>
                                     <div className="flex items-center justify-center gap-4 mb-4">
-                                        <Link 
-                                            href="/my-page/profile-config" 
+                                        <Link
+                                            href="/my-page/profile-config"
                                             className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                         >
                                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -148,12 +148,26 @@ export default function InternalPublicProfileView({ user, events, isOwner, copyB
                 </div>
 
                 <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    {events.map(event => (
-                        <EventCard key={event.id} {...event} />
-                    ))}
+                    {
+                        events.length > 0 ? (
+                            events.map(event => (
+                                <EventCard key={event.id} {...event} />
+                            ))
+                        ) : (
+                            <div className="col-span-full">
+                                <p className="text-gray-600">{isOwner ? "No hay servicios disponibles." : "Este profesional no tiene servicios disponibles."}
+                                </p>
+                                {isOwner && <Link href="/events" className="text-blue-600 hover:text-blue-700 transition-colors">
+                                    Crea uno para que tus clientes puedan reservar
+                                </Link>}
+                            </div>
+                        )
+                    }
                 </div>
             </div>
-            <Footer />
+            {
+                !isOwner && <Footer />
+            }
         </div>
     );
 }

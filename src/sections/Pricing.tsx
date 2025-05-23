@@ -2,45 +2,52 @@
 
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 const plans = [
   {
     name: "Básico",
-    monthlyPrice: 7990,
+    monthlyPrice: 9990,
     description: "Ideal para quienes están empezando a organizar su negocio.",
     features: [
       "Agenda online de citas ilimitadas",
+      "Integración con Google Calendar",
+      "1 sucursal",
+      "1 profesional",
       "Recordatorios y confirmación por email",
-      "Gestión de clientes",
-      "Control de ingresos",
-    ],
-    popular: false,
-  },
-  {
-    name: "Profesional",
-    monthlyPrice: 12990,
-    description: "Perfecto para quienes quieren dar un paso más.",
-    features: [
-      "Todo lo del plan básico, más:",
-      "Recordatorios y confirmación por Bot de WhatsApp",
-      "Estadísticas de crecimiento",
-      "Multilples sucursales",
-      "Encuestas de satisfacción",
+      "Página individual de tu negocio",
     ],
     popular: true,
   },
   {
-    name: "Avanzado",
-    monthlyPrice: 22990,
-    description: "Para quienes buscan tener un control completo.",
+    name: "Profesional",
+    // monthlyPrice: 15990,
+    description: "Perfecto para quienes quieren dar un paso más.",
     features: [
-      "Todo lo del plan profesional, más",
-      "Fichas personalizadas",
-      "Soporte prioritario",
+      "Todo lo del plan Básico",
+      "Recordatorios y confirmación por Bot de WhatsApp",
+      "Estadísticas de crecimiento y rendimiento",
+      "Multiples sucursales",
+      "Multiples profesionales",
+      "Encuestas de satisfacción",
     ],
     popular: false,
+    inConstruction: true,
+  },
+  {
+    name: "Avanzado",
+    // monthlyPrice: 22990,
+    description: "Para quienes buscan tener un control completo.",
+    features: [
+      "Todo lo del plan Profesional",
+      "Fichas de cliente avanzadas y personalizables",
+      "Estadísticas de crecimiento",
+      "Soporte prioritario y asistencia personalizada",
+    ],
+    popular: false,
+    inConstruction: true,
   },
 ];
 
@@ -63,10 +70,10 @@ export default function Pricing() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        Planes accesibles, sin comprometer calidad
+        Precios
       </motion.h2>
       <p className="text-gray-600 mb-8 text-center max-w-xl mx-auto">
-        Creamos esta herramienta pensando en profesionales que buscan organizarse mejor y brindar una experiencia moderna a sus clientes.
+        Mantenete organizado y maximiza tu tiempo con nuestra herramienta de gestión de citas.
       </p>
 
       {/* SWITCH */}
@@ -93,27 +100,36 @@ export default function Pricing() {
           <motion.div
             key={index}
             className={cn(
-              "relative bg-white rounded-xl shadow-lg border border-gray-200 flex flex-col p-6",
-              plan.popular && "border-blue-600"
+              "relative bg-white rounded-xl shadow-lg border border-gray-200 flex flex-col p-6 overflow-hidden",
+              plan.popular && "border-blue-600",
+              plan.inConstruction && "filter grayscale"
             )}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
           >
-            {plan.popular && (
+            {plan.popular && !plan.inConstruction && (
               <div className="absolute top-4 right-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
                 Más elegido
               </div>
             )}
-            <div className="mb-6">
+            {plan.inConstruction && (
+              <div className="absolute top-5 right-[-35px] bg-yellow-400 text-yellow-900 text-[0.65rem] leading-tight font-semibold px-10 py-1 transform rotate-45 shadow-md whitespace-nowrap">
+                Proximamente
+              </div>
+            )}
+            <div className={cn("mb-6", plan.inConstruction && "opacity-70")}>
               <h3 className="text-2xl font-semibold text-gray-900 mb-2">
                 {plan.name}
               </h3>
               <p className="text-3xl font-bold text-blue-600 mb-1">
-                {anual
+                {
+                plan.monthlyPrice !== undefined
+                ? anual
                   ? formatPrice(plan.monthlyPrice * 10)
-                  : formatPrice(plan.monthlyPrice)}
+                  : formatPrice(plan.monthlyPrice)
+                : ''}
               </p>
               <p className="text-gray-600">{plan.description}</p>
             </div>
@@ -131,7 +147,9 @@ export default function Pricing() {
             </ul>
 
             <button className="mt-auto bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition">
-              Empezar 30 días gratis
+              <Link href="/sign-up">
+                Empezar 30 días gratis
+              </Link>
             </button>
           </motion.div>
         ))}

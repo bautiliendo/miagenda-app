@@ -6,6 +6,9 @@ const meetingSchemaBase = z.object({
   guestEmail: z.string().email().min(1, "Required"),
   guestName: z.string().min(1, "Required"),
   guestNotes: z.string().optional(),
+  guestPhone: z.string()
+  .transform(val => val.replace(/\s/g, "")) // Eliminar espacios
+  .pipe(z.string().regex(/^\d{10}$/, "El número debe contener 10 dígitos. Ejemplo: 351 123 4567")), // Validar 10 dígitos
   timezone: z.string().min(1, "Required"),
 })
 

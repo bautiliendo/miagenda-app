@@ -1,4 +1,3 @@
-import { Facebook, Instagram, Linkedin } from 'lucide-react'
 import React from 'react'
 
 export default function Footer() {
@@ -31,25 +30,16 @@ export default function Footer() {
         <div className="md:w-1/4">
           <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-700 mb-3">Contacto</h3>
           <ul className="space-y-2 text-sm">
-            <li>Email: <a href="mailto:juanbautistaliendo1@gmail.com" className="hover:text-blue-600">juanbautista.................</a></li>
-            <li>Tel: <a href="tel:+549.........." className="hover:text-blue-600">+54 9 ... ... ....</a></li>
+            <li>Email: <a href="mailto:agendia@gmail.com" className="hover:text-blue-600">agendia@gmail.com</a></li>
           </ul>
         </div>
 
         {/* Columna 4: Redes sociales */}
         <div className="md:w-1/4">
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-700 mb-3">Seguinos</h3>
-          <div className="flex justify-center md:justify-start gap-4 text-blue-600">
-            <a href="#" aria-label="Instagram" className="hover:text-blue-800">
-              <Instagram size={20} />
-            </a>
-            <a href="#" aria-label="Facebook" className="hover:text-blue-800">
-              <Facebook size={20} />
-            </a>
-            <a href="#" aria-label="LinkedIn" className="hover:text-blue-800">
-              <Linkedin size={20} />
-            </a>
-          </div>
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-700 mb-3">Redes</h3>
+          <ul className="space-y-2 text-sm">
+            <li><a href="https://x.com/bautiliendoo" className="hover:text-blue-600">X (Twitter)</a></li>
+          </ul>
         </div>
       </div>
 

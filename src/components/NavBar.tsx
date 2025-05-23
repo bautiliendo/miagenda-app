@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, ChevronDown, ExternalLink, Phone, Mail } from "lucide-react";
+import { Menu, ChevronDown, ExternalLink, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     NavigationMenu,
@@ -33,7 +33,7 @@ export default function Navbar() {
                     <NavigationMenuList className="flex gap-6 items-center">
                         {/* Soluciones dropdown */}
                         <NavigationMenuItem>
-                            <NavigationMenuTrigger className="text-xl font-medium text-gray-700 hover:text-black bg-white hidden lg:flex">
+                            <NavigationMenuTrigger className="text-base font-medium text-gray-700 hover:text-black bg-white hidden lg:flex">
                                 Soluciones
                             </NavigationMenuTrigger>
                             <NavigationMenuContent className="bg-white p-4 rounded shadow-md">
@@ -50,7 +50,7 @@ export default function Navbar() {
 
                         {/* Preguntas frecuentes dropdown */}
                         <NavigationMenuItem>
-                            <NavigationMenuTrigger className="text-xl font-medium text-gray-700 hover:text-black bg-white hidden lg:flex">
+                            <NavigationMenuTrigger className="text-base font-medium text-gray-700 hover:text-black bg-white hidden lg:flex">
                                 <a href="#faq">
                                     Preguntas frecuentes
                                 </a>
@@ -66,36 +66,41 @@ export default function Navbar() {
                             </NavigationMenuContent>
                         </NavigationMenuItem>
 
-                        <NavigationMenuItem>
-                            <SignedIn>
-                                <a href="#pricing" className="text-xl font-medium text-gray-700 hover:text-black transition-colors">
+                        <SignedIn>
+                            <NavigationMenuItem>
+                                <a href="#pricing" className="text-base font-medium text-gray-700 hover:text-black transition-colors">
                                     Precios
-
                                 </a>
-                                <Link href="/events" className="text-xl font-medium text-gray-700 hover:text-black transition-colors mx-2 ">
-                                    Mi Negocio
-                                </Link>
-                            </SignedIn>
 
-                        </NavigationMenuItem>
+                            </NavigationMenuItem>
+
+                            <NavigationMenuItem>
+                                <Link href="/events" className="text-base font-medium text-gray-700 hover:text-black transition-colors mx-2 flex items-center gap-1">
+                                    Mi Negocio
+                                    <ExternalLink className="h-4 w-4" />
+                                </Link>
+
+                            </NavigationMenuItem>
+                        </SignedIn>
+
 
                         <SignedOut>
                             <NavigationMenuItem>
                                 <Button
                                     asChild
                                     variant="outline"
-                                    className="cursor-pointer ml-4 border-blue-600 text-blue-600 hover:bg-blue-50 text-xl"
+                                    className="cursor-pointer ml-4 border-blue-600 text-blue-600 hover:bg-blue-50 text-base"
                                 >
-                                    <SignInButton mode="modal">
-                                        <span>Ir a mi cuenta</span>
+                                    <SignInButton>
+                                        <span>Iniciar Sesión</span>
                                     </SignInButton>
                                 </Button>
                                 <Button
                                     asChild
                                     variant="outline"
-                                    className="cursor-pointer ml-4 border-blue-600 text-blue-600 hover:bg-blue-50 text-xl"
+                                    className="cursor-pointer ml-4 border-blue-600 text-blue-600 hover:bg-blue-50 text-base"
                                 >
-                                    <SignUpButton mode="modal">
+                                    <SignUpButton>
                                         <span>Registrarse</span>
                                     </SignUpButton>
                                 </Button>
@@ -182,7 +187,7 @@ export default function Navbar() {
                                                 className="cursor-pointer border-blue-600 text-blue-600 hover:bg-blue-50 text-xl"
                                                 onClick={closeMobileMenu}
                                             >
-                                                <SignInButton mode="modal">
+                                                <SignInButton>
                                                     <span>Iniciar Sesión</span>
                                                 </SignInButton>
                                             </Button>
@@ -192,7 +197,7 @@ export default function Navbar() {
                                                 className="cursor-pointer border-blue-600 text-blue-600 hover:bg-blue-50 text-xl"
                                                 onClick={closeMobileMenu}
                                             >
-                                                <SignUpButton mode="modal">
+                                                <SignUpButton>
                                                     <span>Registrarse</span>
                                                 </SignUpButton>
                                             </Button>
@@ -235,12 +240,8 @@ export default function Navbar() {
                                         <Mail className="h-4 w-4" />
                                         <span>agendia@gmail.com</span>
                                     </a>
-                                    <a href="tel:+5493512431491" className="flex items-center gap-2 hover:text-blue-600">
-                                        <Phone className="h-4 w-4" />
-                                        <span>+5493512431491</span>
-                                    </a>
                                     <div className="text-xs mt-2">
-                                        © 2024 AgendIA. Todos los derechos reservados.
+                                        © {new Date().getFullYear()} AgendIA. Todos los derechos reservados.
                                     </div>
                                 </div>
                             </div>
