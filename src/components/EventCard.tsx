@@ -50,7 +50,7 @@ export function EventCard({ event }: { event: CalendarEvent }) {
     const monthFormatted = formatInTimeZone(event.start, displayTimezone, "MMMM", { locale: es })
     const dayOfWeekFormatted = formatInTimeZone(event.start, displayTimezone, "EEEE", { locale: es })
     const guestPhone = event.extendedProperties?.private?.guestPhone || "Teléfono no especificado";
-    const guestEmail = event.attendees?.[0]?.email || "Correo no especificado";
+    const guestEmail = event.attendees?.[1]?.email || "Correo no especificado";
 
     const handleDeleteConfirm = () => {
         startDeleteTransition(async () => {
